@@ -3,6 +3,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
+import candidateRoutes from "./routes/candidateRoutes";
 import { AppError } from "./utils/AppError";
 
 const app = express();
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
+app.use("/api/candidates", candidateRoutes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
