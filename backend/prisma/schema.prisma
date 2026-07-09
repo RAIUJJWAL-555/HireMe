@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  recruiter
+}
+
+enum JobStatus {
+  open
+  closed
+}
+
+enum Stage {
+  Applied
+  Screening
+  Interview
+  Offer
+  Hired
+  Rejected
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(recruiter)
+  createdAt DateTime @default(now())
+
+  jobs         Job[]
+  stageChanges StageHistory[]
+}
+
+model Job {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  department  String
+  status      JobStatus @default(open)
+  createdById String    @map("createdBy") @db.ObjectId
+  createdAt   DateTime  @default(now())
+
+  createdBy  User        @relation(fields: [createdById], references: [id])
+  candidates Candidate[]
+}
+
+model Candidate {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String
+  jobId        String   @map("jobId") @db.ObjectId
+  currentStage Stage    @default(Applied)
+  notes        String   @default("")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  job          Job             @relation(fields: [jobId], references: [id])
+  stageHistory StageHistory[]
+}
+
+model StageHistory {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  candidateId String   @map("candidateId") @db.ObjectId
+  fromStage   String
+  toStage     String
+  changedById String   @map("changedBy") @db.ObjectId
+  changedAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id])
+  changedBy User      @relation(fields: [changedById], references: [id])
+}
