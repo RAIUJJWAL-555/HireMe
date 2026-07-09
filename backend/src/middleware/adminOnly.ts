@@ -1,10 +1,3 @@
-import { Response, NextFunction } from "express";
-import { AuthRequest } from "./auth";
+import { requireRole } from "./requireRole";
 
-export function adminOnly(req: AuthRequest, res: Response, next: NextFunction) {
-  if (req.user?.role !== "admin") {
-    res.status(403).json({ error: "Admin access required" });
-    return;
-  }
-  next();
-}
+export const adminOnly = requireRole("admin");
