@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { api } from "../../lib/api";
 
 const STAGES = ["Applied", "Screening", "Interview", "Offer", "Hired", "Rejected"];
@@ -38,6 +39,7 @@ const VALID_TRANSITIONS: Record<string, string[]> = {
 };
 
 export default function CandidatesPage() {
+  const router = useRouter();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [search, setSearch] = useState("");
@@ -212,7 +214,10 @@ export default function CandidatesPage() {
                           boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
                         }}
                       >
-                        <div style={{ fontSize: "14px", fontWeight: 500, color: "#18181b" }}>
+                        <div
+                          onClick={() => router.push(`/dashboard/candidates/${candidate.id}`)}
+                          style={{ fontSize: "14px", fontWeight: 500, color: "#18181b", cursor: "pointer" }}
+                        >
                           {candidate.name}
                         </div>
                         <div style={{ fontSize: "12px", color: "#71717a", marginTop: "2px" }}>
