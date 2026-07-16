@@ -21,10 +21,10 @@ function MobileNav({ onClose }: { onClose: () => void }) {
   return (
     <>
       <div className="mb-8 flex items-center justify-between px-2">
-        <span className="text-lg font-bold text-zinc-900 dark:text-white">HireTrack</span>
+        <span className="text-lg font-bold text-text-heading">HireTrack</span>
         <button
           onClick={onClose}
-          className="p-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+          className="p-2 text-text-muted-token hover:text-text-heading"
           aria-label="Close menu"
         >
           <X className="h-5 w-5" />
@@ -45,11 +45,11 @@ function MobileNav({ onClose }: { onClose: () => void }) {
               className={`flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-all ${
                 active
                   ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white"
-                  : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 hover:text-zinc-900 dark:hover:text-white"
+                  : "text-text-muted-token hover:bg-surface-hover hover:text-text-heading"
               }`}
             >
               <Icon
-                className={`h-5 w-5 shrink-0 ${active ? "text-white" : "text-zinc-500"}`}
+                className={`h-5 w-5 shrink-0 ${active ? "text-white" : "text-text-muted-token"}`}
                 strokeWidth={1.75}
               />
               <span>{item.label}</span>
@@ -58,18 +58,18 @@ function MobileNav({ onClose }: { onClose: () => void }) {
         })}
         {user?.role === "admin" && (
           <>
-            <div className="my-2 border-t border-zinc-200 dark:border-white/[0.06]" />
-            <span className="px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-600">Admin</span>
+            <div className="my-2 border-t border-border-theme" />
+            <span className="px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-text-faint">Admin</span>
             <Link
               href="/dashboard/users"
               onClick={onClose}
               className={`flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-all ${
                 pathname.startsWith("/dashboard/users")
                   ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white"
-                  : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 hover:text-zinc-900 dark:hover:text-white"
+                  : "text-text-muted-token hover:bg-surface-hover hover:text-text-heading"
               }`}
             >
-              <Shield className={`h-5 w-5 shrink-0 ${pathname.startsWith("/dashboard/users") ? "text-white" : "text-zinc-500"}`} strokeWidth={1.75} />
+              <Shield className={`h-5 w-5 shrink-0 ${pathname.startsWith("/dashboard/users") ? "text-white" : "text-text-muted-token"}`} strokeWidth={1.75} />
               <span>Users</span>
             </Link>
           </>
@@ -77,9 +77,9 @@ function MobileNav({ onClose }: { onClose: () => void }) {
       </nav>
       <button
         onClick={logout}
-        className="mt-auto flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-white/5 hover:text-zinc-900 dark:hover:text-white"
+        className="mt-auto flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium text-text-muted-token hover:bg-surface-hover hover:text-text-heading"
       >
-        <LogOut className="h-5 w-5 shrink-0 text-zinc-500" strokeWidth={1.75} />
+        <LogOut className="h-5 w-5 shrink-0 text-text-muted-token" strokeWidth={1.75} />
         <span>Logout</span>
       </button>
     </>
@@ -97,7 +97,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-[#0a0a0a]">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-700 border-t-zinc-100" />
       </div>
     );
@@ -106,7 +106,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!user) return null;
 
   return (
-    <div className="flex min-h-screen bg-white dark:bg-[#0a0a0a]">
+    <div className="flex min-h-screen bg-background">
       {/* ── Sidebar (desktop) ── */}
       <Sidebar />
 
@@ -118,7 +118,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         />
       )}
       <div
-        className={`fixed inset-y-0 left-0 z-50 flex w-60 flex-col bg-white dark:bg-[#0a0a0a] p-5 transition-transform duration-200 md:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-60 flex-col bg-background p-5 transition-transform duration-200 md:hidden ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -128,15 +128,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* ── Main area ── */}
       <div className="flex flex-1 flex-col overflow-y-auto">
         {/* Mobile top bar */}
-        <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-zinc-200 dark:border-zinc-800 px-4 py-3 bg-white dark:bg-[#0a0a0a] md:hidden">
+        <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-divider px-4 py-3 bg-background md:hidden">
           <button
             onClick={() => setMobileOpen(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-text-muted-token hover:text-text-heading"
             aria-label="Open menu"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <span className="text-lg font-bold text-zinc-900 dark:text-white">HireTrack</span>
+          <span className="text-lg font-bold text-text-heading">HireTrack</span>
         </header>
 
         {children}
