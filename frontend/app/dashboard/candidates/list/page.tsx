@@ -89,18 +89,18 @@ export default function CandidateListPage() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 md:px-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-semibold text-zinc-900 dark:text-white m-0">Candidates</h1>
+          <h1 className="text-xl font-semibold text-text-heading m-0">Candidates</h1>
           <div className="flex items-center gap-2">
             <Link
               href="/dashboard/candidates/import"
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full border border-divider bg-surface px-4 py-2 text-xs text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
             >
               <UploadCloud className="h-3.5 w-3.5" />
               Import CSV
             </Link>
             <Link
               href="/dashboard/candidates"
-              className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+              className="rounded-full border border-divider bg-surface px-4 py-2 text-xs text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
             >
               Kanban View
             </Link>
@@ -113,12 +113,12 @@ export default function CandidateListPage() {
             placeholder="Search by name or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 min-w-0 rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder-zinc-400 dark:placeholder-zinc-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="flex-1 min-w-0 rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading placeholder-text-faint focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           />
           <select
             value={stageFilter}
             onChange={(e) => setStageFilter(e.target.value)}
-            className="min-w-0 sm:min-w-[140px] rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="min-w-0 sm:min-w-[140px] rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           >
             {STAGES.map((s) => (
               <option key={s} value={s}>
@@ -129,7 +129,7 @@ export default function CandidateListPage() {
           <select
             value={jobFilter}
             onChange={(e) => setJobFilter(e.target.value)}
-            className="min-w-0 sm:min-w-[180px] rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="min-w-0 sm:min-w-[180px] rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           >
             <option value="">All jobs</option>
             {jobs.map((job) => (
@@ -141,12 +141,12 @@ export default function CandidateListPage() {
         </div>
 
         {loading ? (
-          <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 overflow-x-auto">
+          <div className="rounded-2xl border border-divider bg-background overflow-x-auto">
             <table className="w-full min-w-[680px] border-collapse">
               <thead>
                 <tr className="text-left">
                   {["Name", "Email", "Job", "Stage", "Applied", "Actions"].map((h) => (
-                    <th key={h} className={`px-4 py-3 text-sm font-semibold text-zinc-500 dark:text-zinc-400 border-b border-zinc-200 dark:border-zinc-800/60 ${h === "Actions" ? "text-right" : ""}`}>{h}</th>
+                    <th key={h} className={`px-4 py-3 text-sm font-semibold text-text-muted-token border-b border-divider ${h === "Actions" ? "text-right" : ""}`}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -163,12 +163,12 @@ export default function CandidateListPage() {
           <CandidatesEmptyState hasFilters={hasFilters} />
         ) : (
           <>
-            <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 overflow-x-auto">
+            <div className="rounded-2xl border border-divider bg-background overflow-x-auto">
               <table className="w-full min-w-[680px] border-collapse text-sm">
                 <thead>
                   <tr className="text-left">
                     {["Name", "Email", "Job", "Stage", "Applied", "Actions"].map((h) => (
-                      <th key={h} className={`px-4 py-3 text-sm font-semibold text-zinc-500 dark:text-zinc-400 border-b border-zinc-200 dark:border-zinc-800/60 ${h === "Actions" ? "text-right" : ""}`}>{h}</th>
+                      <th key={h} className={`px-4 py-3 text-sm font-semibold text-text-muted-token border-b border-divider ${h === "Actions" ? "text-right" : ""}`}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -177,12 +177,12 @@ export default function CandidateListPage() {
                     const stageKey = STAGE_TOKEN_KEY[candidate.currentStage];
                     const stageColor = stageKey ? colors.stage[stageKey] : null;
                     return (
-                      <tr key={candidate.id} className="border-b border-zinc-200 dark:border-zinc-800/60">
-                        <td className="px-4 py-3 font-medium text-zinc-900 dark:text-white">
+                      <tr key={candidate.id} className="border-b border-divider">
+                        <td className="px-4 py-3 font-medium text-text-heading">
                           {candidate.name}
                         </td>
-                        <td className="px-4 py-3 text-zinc-500 dark:text-zinc-400">{candidate.email}</td>
-                        <td className="px-4 py-3 text-zinc-500 dark:text-zinc-400">{candidate.job.title}</td>
+                        <td className="px-4 py-3 text-text-muted-token">{candidate.email}</td>
+                        <td className="px-4 py-3 text-text-muted-token">{candidate.job.title}</td>
                         <td className="px-4 py-3">
                           {stageColor ? (
                             <span
@@ -192,12 +192,12 @@ export default function CandidateListPage() {
                               {candidate.currentStage}
                             </span>
                           ) : (
-                            <span className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-500">
+                            <span className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium bg-surface text-text-muted-token">
                               {candidate.currentStage}
                             </span>
                           )}
                         </td>
-                        <td className="px-4 py-3 text-xs text-zinc-500">
+                        <td className="px-4 py-3 text-xs text-text-muted-token">
                           {new Date(candidate.createdAt).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
@@ -207,7 +207,7 @@ export default function CandidateListPage() {
                         <td className="px-4 py-3 text-right">
                           <Link
                             href={`/dashboard/candidates/${candidate.id}`}
-                            className="min-h-[44px] inline-flex items-center rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+                            className="min-h-[44px] inline-flex items-center rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
                           >
                             View
                           </Link>
@@ -224,11 +224,11 @@ export default function CandidateListPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-3 py-1.5 text-xs text-zinc-700 dark:text-white disabled:opacity-40 disabled:cursor-default hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full border border-divider bg-surface px-3 py-1.5 text-xs text-text-heading disabled:opacity-40 disabled:cursor-default hover:bg-surface-hover transition-colors"
                 >
                   Prev
                 </button>
-                <span className="hidden sm:inline text-xs text-zinc-500 px-2">
+                <span className="hidden sm:inline text-xs text-text-muted-token px-2">
                   {page} / {pagination.totalPages}
                 </span>
                 <div className="flex sm:hidden gap-1">
@@ -239,7 +239,7 @@ export default function CandidateListPage() {
                       className={`rounded-full border px-2.5 py-1.5 text-xs transition-colors ${
                         p === page
                           ? "border-orange-500 bg-orange-500 text-white"
-                          : "border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 text-zinc-700 dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800"
+                          : "border-divider bg-surface text-text-heading hover:bg-surface-hover"
                       } ${Math.abs(p - page) <= 1 || p === 1 || p === pagination.totalPages ? "" : "hidden"}`}
                     >
                       {p}
@@ -254,7 +254,7 @@ export default function CandidateListPage() {
                       className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
                         p === page
                           ? "border-orange-500 bg-orange-500 text-white"
-                          : "border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 text-zinc-700 dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800"
+                          : "border-divider bg-surface text-text-heading hover:bg-surface-hover"
                       }`}
                     >
                       {p}
@@ -264,7 +264,7 @@ export default function CandidateListPage() {
                 <button
                   onClick={() => setPage((p) => Math.min(pagination.totalPages, p + 1))}
                   disabled={page === pagination.totalPages}
-                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-3 py-1.5 text-xs text-zinc-700 dark:text-white disabled:opacity-40 disabled:cursor-default hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full border border-divider bg-surface px-3 py-1.5 text-xs text-text-heading disabled:opacity-40 disabled:cursor-default hover:bg-surface-hover transition-colors"
                 >
                   Next
                 </button>

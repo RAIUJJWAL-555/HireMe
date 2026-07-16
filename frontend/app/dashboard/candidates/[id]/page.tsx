@@ -112,13 +112,13 @@ export default function CandidateDetailPage() {
     <div className="mx-auto max-w-[720px] px-6 py-8 md:px-8">
         <button
           onClick={() => router.back()}
-          className="block mb-4 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors bg-transparent border-none cursor-pointer"
+          className="block mb-4 text-sm text-text-muted-token hover:text-text-heading transition-colors bg-transparent border-none cursor-pointer"
         >
           &larr; Back
         </button>
 
         {/* ── Profile card ── */}
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
+        <div className="rounded-2xl border border-divider bg-background shadow-sm p-4 md:p-6 mb-4">
           <div className="flex items-start gap-4">
             <div
               className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
@@ -130,8 +130,8 @@ export default function CandidateDetailPage() {
             <div className="min-w-0 flex-1">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <h1 className="text-2xl font-semibold text-zinc-900 dark:text-white m-0 break-words">{candidate.name}</h1>
-                  <p className="text-sm text-zinc-500 mt-0.5 break-words">{candidate.email}</p>
+                  <h1 className="text-2xl font-semibold text-text-heading m-0 break-words">{candidate.name}</h1>
+                  <p className="text-sm text-text-muted-token mt-0.5 break-words">{candidate.email}</p>
                 </div>
                 <span
                   className="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
@@ -144,22 +144,22 @@ export default function CandidateDetailPage() {
                 </span>
               </div>
 
-              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
-                <span className="rounded-full bg-zinc-100 dark:bg-zinc-800/80 px-2.5 py-0.5">{candidate.job.title}</span>
-                <span className="text-zinc-400 dark:text-zinc-700">&middot;</span>
+              <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-text-muted-token">
+                <span className="rounded-full bg-surface px-2.5 py-0.5">{candidate.job.title}</span>
+                <span className="text-text-faint">&middot;</span>
                 <span>Applied {new Date(candidate.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
               </div>
 
               <div className="mt-3 flex flex-col gap-2 text-sm">
                 {candidate.phone && (
-                  <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
-                    <Phone className="h-3.5 w-3.5 text-zinc-500 shrink-0" />
+                  <div className="flex items-center gap-2 text-text-muted-token">
+                    <Phone className="h-3.5 w-3.5 text-text-muted-token shrink-0" />
                     <span>{candidate.phone}</span>
                   </div>
                 )}
                 {candidate.resumeUrl && (
                   <div className="flex items-center gap-2">
-                    <ExternalLink className="h-3.5 w-3.5 text-zinc-500 shrink-0" />
+                    <ExternalLink className="h-3.5 w-3.5 text-text-muted-token shrink-0" />
                     <a
                       href={candidate.resumeUrl}
                       target="_blank"
@@ -177,8 +177,8 @@ export default function CandidateDetailPage() {
 
         {/* ── Stage change ── */}
         {VALID_TRANSITIONS[candidate.currentStage]?.length > 0 && (
-          <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
-            <h2 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 m-0 mb-3 uppercase tracking-wider">Move to</h2>
+          <div className="rounded-2xl border border-divider bg-background shadow-sm p-4 md:p-6 mb-4">
+            <h2 className="text-sm font-semibold text-text-muted-token m-0 mb-3 uppercase tracking-wider">Move to</h2>
             <div className="flex flex-wrap gap-2">
               {VALID_TRANSITIONS[candidate.currentStage].map((stage) => {
                 const key = STAGE_TOKEN_KEY[stage];
@@ -203,14 +203,14 @@ export default function CandidateDetailPage() {
         )}
 
         {/* ── Notes ── */}
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
-          <h2 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 m-0 mb-3 uppercase tracking-wider">Notes</h2>
+        <div className="rounded-2xl border border-divider bg-background shadow-sm p-4 md:p-6 mb-4">
+          <h2 className="text-sm font-semibold text-text-muted-token m-0 mb-3 uppercase tracking-wider">Notes</h2>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={5}
             placeholder="Add notes about this candidate..."
-            className="w-full rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-50 dark:bg-zinc-800/60 p-3 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 resize-y font-[inherit] box-border focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="w-full rounded-xl border border-divider bg-surface p-3 text-sm text-text-heading placeholder-text-faint resize-y font-[inherit] box-border focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           />
           <div className="flex items-center gap-3 mt-3">
             <button
@@ -224,8 +224,8 @@ export default function CandidateDetailPage() {
         </div>
 
         {/* ── Stage History ── */}
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6">
-          <h2 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 m-0 mb-4 uppercase tracking-wider">Stage History</h2>
+        <div className="rounded-2xl border border-divider bg-background shadow-sm p-4 md:p-6">
+          <h2 className="text-sm font-semibold text-text-muted-token m-0 mb-4 uppercase tracking-wider">Stage History</h2>
           {candidate.stageHistory.length === 0 ? (
             <HistoryEmptyState />
           ) : (
@@ -240,17 +240,17 @@ export default function CandidateDetailPage() {
                         className="h-2.5 w-2.5 rounded-full mt-1 shrink-0"
                         style={{ backgroundColor: toKey ? colors.stage[toKey].dot : "#6b7280" }}
                       />
-                      {!isLast &&                       <div className="w-0.5 flex-1 bg-zinc-200 dark:bg-zinc-800 min-h-6" />}
+                      {!isLast &&                       <div className="w-0.5 flex-1 bg-divider min-h-6" />}
                     </div>
                     <div className={`flex-1 ${isLast ? "" : "pb-4"}`}>
-                      <div className="text-sm text-zinc-900 dark:text-white">
+                      <div className="text-sm text-text-heading">
                         <span className="font-medium">{entry.fromStage}</span>
                         {" → "}
                         <span className="font-semibold" style={{ color: toKey ? colors.stage[toKey].text : "#9ca3af" }}>
                           {entry.toStage}
                         </span>
                       </div>
-                      <div className="text-xs text-zinc-500 mt-0.5">
+                      <div className="text-xs text-text-muted-token mt-0.5">
                         by {entry.changedBy.name} &middot;{" "}
                         {new Date(entry.changedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                       </div>

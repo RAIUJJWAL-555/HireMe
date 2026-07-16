@@ -20,7 +20,7 @@ export default function CustomHero() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#fdfbf7] via-[#fafaff] to-white py-16 sm:py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#fdfbf7] via-[#fafaff] to-background py-16 sm:py-24 lg:py-32">
       
       {/* Decorative Background Accent Sparkle (Top-Left) */}
       <div className="absolute left-[8%] top-[12%] hidden md:block text-orange-400 opacity-50 pointer-events-none">
@@ -55,19 +55,18 @@ export default function CustomHero() {
             AI-Driven Recruiting Platform
           </div>
 
-          {/* Headline (Accent Highlight Word in Blue, Underscore in Orange) */}
-          <h1 className="max-w-4xl text-[38px] font-black tracking-tight text-[#111827] sm:text-5xl lg:text-6xl leading-tight sm:leading-none">
+          {/* Headline */}
+          <h1 className="max-w-4xl text-[38px] font-black tracking-tight text-text-heading sm:text-5xl lg:text-6xl leading-tight sm:leading-none">
             Find the absolute best talent
             <br className="hidden sm:inline" />
             <span className="relative inline-block mt-2 sm:mt-4 text-blue-600">
               without the complexity
-              {/* Custom underline orange underscore accent */}
               <span className="absolute -bottom-1.5 left-0 w-full h-1.5 bg-orange-500/80 rounded-full" />
             </span>
           </h1>
 
           {/* Description */}
-          <p className="mt-8 max-w-2xl text-base sm:text-lg leading-relaxed text-[#6b7280]">
+          <p className="mt-8 max-w-2xl text-base sm:text-lg leading-relaxed text-text-muted-token">
             Search thousands of vetted candidate profiles, manage jobs, and automate 
             your screening pipeline. Built for high-growth engineering and product teams.
           </p>
@@ -75,7 +74,7 @@ export default function CustomHero() {
           {/* Connected Pill Search Bar */}
           <form
             onSubmit={handleSearchSubmit}
-            className="mt-10 w-full max-w-xl rounded-full bg-white border border-[#e5e7eb]/80 p-2 shadow-lg shadow-zinc-200/30 flex items-center justify-between hover:border-[#d1d5db] focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-200 transition-all"
+            className="mt-10 w-full max-w-xl rounded-full bg-background border border-border-theme/80 p-2 shadow-lg shadow-zinc-200/30 flex items-center justify-between hover:border-divider-strong focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-200 transition-all"
           >
             {/* Input field */}
             <div className="flex-1 flex items-center min-w-0 pl-3">
@@ -85,7 +84,7 @@ export default function CustomHero() {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                className="h-4.5 w-4.5 text-[#9ca3af] mr-2 shrink-0"
+                className="h-4.5 w-4.5 text-text-faint mr-2 shrink-0"
               >
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -95,19 +94,19 @@ export default function CustomHero() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Job title, keywords..."
-                className="w-full bg-transparent text-sm text-[#111827] placeholder-[#9ca3af] focus:outline-none border-none outline-none ring-0"
+                className="w-full bg-transparent text-sm text-text-heading placeholder-text-faint focus:outline-none border-none outline-none ring-0"
               />
             </div>
 
             {/* Vertical Divider */}
-            <div className="h-6 w-px bg-[#e5e7eb] mx-2 shrink-0 hidden sm:block" />
+            <div className="h-6 w-px bg-border-theme mx-2 shrink-0 hidden sm:block" />
 
             {/* Dropdown Selector */}
             <div className="shrink-0 hidden sm:block">
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="bg-transparent text-sm font-semibold text-[#6b7280] px-3 py-1 cursor-pointer focus:outline-none border-none outline-none ring-0 mr-1"
+                className="bg-transparent text-sm font-semibold text-text-muted-token px-3 py-1 cursor-pointer focus:outline-none border-none outline-none ring-0 mr-1"
               >
                 <option value="all">All Fields</option>
                 <option value="engineering">Engineering</option>
@@ -140,19 +139,19 @@ export default function CustomHero() {
           </form>
 
           {/* Popular Tags */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-xs sm:text-sm text-[#6b7280]">
-            <span className="font-semibold text-[#9ca3af] mr-1">Popular:</span>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-xs sm:text-sm text-text-muted-token">
+            <span className="font-semibold text-text-faint mr-1">Popular:</span>
             {popularTags.map((tag, idx) => (
               <span key={tag} className="flex items-center">
                 <button
                   type="button"
                   onClick={() => setSearchQuery(tag)}
-                  className="hover:text-[#111827] hover:underline transition-colors focus:outline-none"
+                  className="hover:text-text-heading hover:underline transition-colors focus:outline-none"
                 >
                   {tag}
                 </button>
                 {idx < popularTags.length - 1 && (
-                  <span className="mx-2 text-[#d1d5db] pointer-events-none">&bull;</span>
+                  <span className="mx-2 text-divider-strong pointer-events-none">&bull;</span>
                 )}
               </span>
             ))}
@@ -171,7 +170,7 @@ export default function CustomHero() {
               />
 
               {/* Connecting Dashed SVG Line to rating badge */}
-              <svg className="absolute w-[90px] h-[60px] top-[14%] left-[-4%] text-[#d1d5db] pointer-events-none z-10 hidden sm:block animate-pulse" fill="none" viewBox="0 0 90 60">
+              <svg className="absolute w-[90px] h-[60px] top-[14%] left-[-4%] text-divider-strong pointer-events-none z-10 hidden sm:block animate-pulse" fill="none" viewBox="0 0 90 60">
                 <path d="M15,35 Q50,15 75,30" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" strokeLinecap="round" />
               </svg>
 
@@ -185,7 +184,7 @@ export default function CustomHero() {
               </div>
 
               {/* Floating Card 1: Success Rate (Top-Right) */}
-              <div className="absolute -top-4 -right-4 sm:-right-8 z-20 bg-white rounded-2xl shadow-xl border border-[#e5e7eb] p-4 w-[165px] animate-float-slow">
+              <div className="absolute -top-4 -right-4 sm:-right-8 z-20 bg-background rounded-2xl shadow-xl border border-border-theme p-4 w-[165px] animate-float-slow">
                 <div className="flex flex-col gap-1.5 text-left">
                   <div className="flex items-center gap-1.5">
                     <div className="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
@@ -193,25 +192,25 @@ export default function CustomHero() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                       </svg>
                     </div>
-                    <span className="text-[10px] font-bold text-[#9ca3af] uppercase tracking-wider">Success Rate</span>
+                    <span className="text-[10px] font-bold text-text-faint uppercase tracking-wider">Success Rate</span>
                   </div>
                   <div className="flex items-baseline gap-1 mt-0.5">
-                    <span className="text-2xl font-black text-[#111827] leading-none">94%</span>
+                    <span className="text-2xl font-black text-text-heading leading-none">94%</span>
                     <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1 rounded">
                       +2.4%
                     </span>
                   </div>
-                  <div className="w-full bg-[#f4f4f5] h-1.5 rounded-full overflow-hidden mt-1.5">
+                  <div className="w-full bg-surface h-1.5 rounded-full overflow-hidden mt-1.5">
                     <div className="bg-emerald-500 h-full rounded-full" style={{ width: "94%" }} />
                   </div>
                 </div>
               </div>
 
               {/* Floating Card 2: Mini Bar Chart (Bottom-Left) */}
-              <div className="absolute -bottom-4 -left-4 sm:-left-8 z-20 bg-white rounded-2xl shadow-xl border border-[#e5e7eb] p-4 w-[160px] animate-float-delayed">
+              <div className="absolute -bottom-4 -left-4 sm:-left-8 z-20 bg-background rounded-2xl shadow-xl border border-border-theme p-4 w-[160px] animate-float-delayed">
                 <div className="flex flex-col gap-1 text-left">
-                  <span className="text-[9px] font-bold text-[#9ca3af] uppercase tracking-wider">Pipelines</span>
-                  <span className="text-xs font-extrabold text-[#111827] leading-none">Hires / Month</span>
+                  <span className="text-[9px] font-bold text-text-faint uppercase tracking-wider">Pipelines</span>
+                  <span className="text-xs font-extrabold text-text-heading leading-none">Hires / Month</span>
                   <div className="flex items-end gap-1.5 h-10 mt-3 justify-between">
                     <div className="w-2.5 bg-orange-200 rounded-t-sm h-[30%]" />
                     <div className="w-2.5 bg-blue-300 rounded-t-sm h-[50%]" />
@@ -223,7 +222,7 @@ export default function CustomHero() {
               </div>
 
               {/* Floating Circular Badge Icon (Top-Left) */}
-              <div className="absolute top-[16%] -left-6 sm:-left-8 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-md border border-[#e5e7eb] animate-float-delayed">
+              <div className="absolute top-[16%] -left-6 sm:-left-8 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-600 shadow-md border border-border-theme animate-float-delayed">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -237,7 +236,7 @@ export default function CustomHero() {
               </div>
 
               {/* Floating Brand Logo Badge (Center-Right in blue) */}
-              <div className="absolute top-[42%] -right-6 sm:-right-8 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md border border-[#e5e7eb] hover:scale-110 transition-transform duration-200 animate-float-slow">
+              <div className="absolute top-[42%] -right-6 sm:-right-8 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-background shadow-md border border-border-theme hover:scale-110 transition-transform duration-200 animate-float-slow">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

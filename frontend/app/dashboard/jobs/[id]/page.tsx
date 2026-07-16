@@ -65,24 +65,24 @@ export default function JobDetailPage() {
 
   return (
     <div className="mx-auto max-w-[720px] px-6 py-8 md:px-8">
-        <button onClick={() => router.back()} className="block mb-4 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors bg-transparent border-none cursor-pointer">
+        <button onClick={() => router.back()} className="block mb-4 text-sm text-text-muted-token hover:text-text-heading transition-colors bg-transparent border-none cursor-pointer">
           &larr; Back
         </button>
 
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
+        <div className="rounded-2xl border border-divider bg-background shadow-sm p-4 md:p-6 mb-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <h1 className="text-2xl font-semibold text-zinc-900 dark:text-white m-0 break-words">{job.title}</h1>
-              <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-zinc-500">
-                <span className="rounded-full bg-zinc-100 dark:bg-zinc-800/80 px-2.5 py-0.5">{job.qualification}</span>
-                <span className="text-zinc-400 dark:text-zinc-700">&middot;</span>
+              <h1 className="text-2xl font-semibold text-text-heading m-0 break-words">{job.title}</h1>
+              <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-text-muted-token">
+                <span className="rounded-full bg-surface px-2.5 py-0.5">{job.qualification}</span>
+                <span className="text-text-faint">&middot;</span>
                 <span>{EXPERIENCE_LABELS[job.experience] || job.experience}</span>
               </div>
             </div>
             <span
               className="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
               style={{
-                backgroundColor: job.status === "open" ? colors.successBg : "#f4f4f5",
+                backgroundColor: job.status === "open" ? colors.successBg : "var(--bg-surface)",
                 color: job.status === "open" ? colors.successMuted : colors.textMuted,
               }}
             >
@@ -91,7 +91,7 @@ export default function JobDetailPage() {
           </div>
 
           {job.description && (
-            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed whitespace-pre-wrap">{job.description}</p>
+            <p className="mt-4 text-sm text-text-muted-token leading-relaxed whitespace-pre-wrap">{job.description}</p>
           )}
 
           <div className="mt-4 flex items-center gap-3">
@@ -103,20 +103,20 @@ export default function JobDetailPage() {
             </Link>
             <Link
               href="/dashboard/jobs"
-              className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-5 py-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+              className="rounded-full border border-divider bg-surface px-5 py-2 text-sm text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
             >
               All Jobs
             </Link>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6">
-          <h2 className="text-base font-semibold text-zinc-900 dark:text-white m-0 mb-4">
-            Candidates <span className="text-zinc-500 font-normal">({job.candidates.length})</span>
+        <div className="rounded-2xl border border-divider bg-background shadow-sm p-4 md:p-6">
+          <h2 className="text-base font-semibold text-text-heading m-0 mb-4">
+            Candidates <span className="text-text-muted-token font-normal">({job.candidates.length})</span>
           </h2>
 
           {job.candidates.length === 0 ? (
-            <p className="text-sm text-zinc-400 dark:text-zinc-600 py-6 text-center">No candidates have applied yet.</p>
+            <p className="text-sm text-text-faint py-6 text-center">No candidates have applied yet.</p>
           ) : (
             <div className="flex flex-col gap-2">
               {job.candidates.map((c) => {
@@ -127,14 +127,14 @@ export default function JobDetailPage() {
                   <div
                     key={c.id}
                     onClick={() => router.push(`/dashboard/candidates/${c.id}`)}
-                    className="flex items-center gap-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/40 p-3 cursor-pointer transition-colors hover:border-zinc-400 dark:hover:border-zinc-600/60"
+                    className="flex items-center gap-3 rounded-2xl bg-surface border border-divider p-3 cursor-pointer transition-colors hover:border-divider-strong"
                   >
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white" style={{ backgroundColor: stageColor }}>
                       {initials}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-sm font-medium text-zinc-900 dark:text-white truncate hover:text-orange-400 transition-colors">{c.name}</div>
-                      <div className="text-[11px] text-zinc-500 truncate">{c.email}</div>
+                      <div className="text-sm font-medium text-text-heading truncate hover:text-orange-400 transition-colors">{c.name}</div>
+                      <div className="text-[11px] text-text-muted-token truncate">{c.email}</div>
                     </div>
                     <span className="shrink-0 rounded-full px-2.5 py-0.5 text-[11px] font-medium" style={{ backgroundColor: colors.stage[stageKey]?.bg, color: colors.stage[stageKey]?.text }}>
                       {c.currentStage}

@@ -100,10 +100,10 @@ export default function CandidatesPage() {
   return (
     <div className="px-6 py-8 md:px-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-semibold text-zinc-900 dark:text-white m-0">Candidates</h1>
+          <h1 className="text-xl font-semibold text-text-heading m-0">Candidates</h1>
           <Link
             href="/dashboard/candidates/list"
-            className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+            className="rounded-full border border-divider bg-surface px-4 py-2 text-xs text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
           >
             List View
           </Link>
@@ -115,12 +115,12 @@ export default function CandidatesPage() {
             placeholder="Search by name or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 min-w-0 rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder-zinc-400 dark:placeholder-zinc-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="flex-1 min-w-0 rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading placeholder-text-faint focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           />
           <select
             value={jobFilter}
             onChange={(e) => setJobFilter(e.target.value)}
-            className="min-w-0 md:min-w-[180px] rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="min-w-0 md:min-w-[180px] rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           >
             <option value="">All jobs</option>
             {jobs.map((job) => (
@@ -144,22 +144,22 @@ export default function CandidatesPage() {
             {grouped.map(({ stage, candidates: stageCandidates }) => (
               <div
                 key={stage}
-                className="w-[264px] min-w-[264px] shrink-0 rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-zinc-100 dark:bg-zinc-900/50 flex flex-col max-h-[calc(100vh-220px)]"
+                className="w-[264px] min-w-[264px] shrink-0 rounded-2xl border border-divider bg-surface flex flex-col max-h-[calc(100vh-220px)]"
               >
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800/60">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-divider">
                   <div
                     className="h-2.5 w-2.5 rounded-full shrink-0"
                     style={{ backgroundColor: colors.stage[STAGE_TOKEN_KEY[stage]].dot }}
                   />
-                  <span className="text-sm font-semibold text-zinc-900 dark:text-white">{stage}</span>
-                  <span className="ml-auto rounded-full bg-zinc-200 dark:bg-zinc-800 px-2 py-0.5 text-xs text-zinc-500">
+                  <span className="text-sm font-semibold text-text-heading">{stage}</span>
+                  <span className="ml-auto rounded-full bg-surface-hover px-2 py-0.5 text-xs text-text-muted-token">
                     {stageCandidates.length}
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-2 p-2 overflow-y-auto flex-1">
                   {stageCandidates.length === 0 ? (
-                    <div className="py-8 text-center text-xs text-zinc-400 dark:text-zinc-600">
+                    <div className="py-8 text-center text-xs text-text-faint">
                       No candidates
                     </div>
                   ) : (
@@ -168,7 +168,7 @@ export default function CandidatesPage() {
                       return (
                         <div
                           key={candidate.id}
-                          className="rounded-2xl bg-white dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/40 shadow-sm p-3 transition-colors hover:border-zinc-300 dark:hover:border-zinc-600/60"
+                          className="rounded-2xl bg-background border border-divider shadow-sm p-3 transition-colors hover:border-divider-strong"
                         >
                           <div className="flex items-center gap-2.5">
                             <div
@@ -180,11 +180,11 @@ export default function CandidatesPage() {
                             <div className="min-w-0 flex-1">
                               <div
                                 onClick={() => router.push(`/dashboard/candidates/${candidate.id}`)}
-                                className="text-sm font-medium text-zinc-900 dark:text-white truncate cursor-pointer hover:text-orange-400 transition-colors"
+                                className="text-sm font-medium text-text-heading truncate cursor-pointer hover:text-orange-400 transition-colors"
                               >
                                 {candidate.name}
                               </div>
-                              <div className="text-[11px] text-zinc-500 truncate">
+                              <div className="text-[11px] text-text-muted-token truncate">
                                 {candidate.job.title}
                               </div>
                             </div>
@@ -195,14 +195,14 @@ export default function CandidatesPage() {
                           </div>
 
                           {transitions.length > 0 && (
-                            <div className="mt-2.5 pt-2.5 border-t border-zinc-200 dark:border-zinc-700/30">
+                            <div className="mt-2.5 pt-2.5 border-t border-divider">
                               <select
                                 value=""
                                 onChange={(e) => {
                                   if (e.target.value) handleMove(candidate.id, e.target.value);
                                 }}
                                 disabled={movingId === candidate.id}
-                                className={`w-full rounded-lg border border-zinc-300 dark:border-zinc-700/50 bg-white dark:bg-zinc-900/60 px-3 py-1.5 text-xs text-zinc-600 dark:text-zinc-400 focus:border-orange-500 focus:outline-none min-h-[32px] ${
+                                className={`w-full rounded-lg border border-divider bg-surface px-3 py-1.5 text-xs text-text-muted-token focus:border-orange-500 focus:outline-none min-h-[32px] ${
                                   movingId === candidate.id ? "opacity-40" : ""
                                 }`}
                               >
@@ -217,12 +217,12 @@ export default function CandidatesPage() {
                           )}
 
                           {stage === "Hired" && (
-                            <div className="mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-700/30 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                            <div className="mt-2 pt-2 border-t border-divider text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
                               Hired
                             </div>
                           )}
                           {stage === "Rejected" && (
-                            <div className="mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-700/30 text-[11px] font-medium text-red-500 dark:text-red-400">
+                            <div className="mt-2 pt-2 border-t border-divider text-[11px] font-medium text-red-500 dark:text-red-400">
                               Rejected
                             </div>
                           )}

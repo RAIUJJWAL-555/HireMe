@@ -28,7 +28,7 @@ export default function Hero() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
           <div
-            className={`mb-6 inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-400 transition-all duration-700 ${
+            className={`mb-6 inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 transition-all duration-700 ${
               mounted
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-4"
@@ -39,20 +39,20 @@ export default function Hero() {
           </div>
 
           <h1
-            className={`max-w-4xl text-[32px] font-extrabold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-white transition-all duration-700 delay-100 ${
+            className={`max-w-4xl text-[32px] font-extrabold tracking-tight text-text-heading sm:text-4xl lg:text-5xl transition-all duration-700 delay-100 ${
               mounted
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-4"
             }`}
           >
             Track every candidate, from applied to hired — in{" "}
-            <span className="bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent dark:from-indigo-400 dark:to-violet-400">
+            <span className="bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">
               one clean pipeline
             </span>
           </h1>
 
           <p
-            className={`mt-6 max-w-2xl text-base sm:text-xl leading-relaxed text-zinc-600 dark:text-zinc-400 transition-all duration-700 delay-200 ${
+            className={`mt-6 max-w-2xl text-base sm:text-xl leading-relaxed text-text-muted-token transition-all duration-700 delay-200 ${
               mounted
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 -translate-y-4"
@@ -71,7 +71,7 @@ export default function Hero() {
           >
             <Link
               href="/login"
-              className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-offset-zinc-950 transition-all shadow-sm"
+              className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all shadow-sm"
             >
               Try Demo
             </Link>
@@ -79,7 +79,7 @@ export default function Hero() {
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-zinc-200 bg-white px-6 py-3 text-base font-semibold text-zinc-700 hover:bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800/80 dark:focus:ring-zinc-300 dark:focus:ring-offset-zinc-950 transition-all"
+              className="inline-flex items-center gap-2 rounded-lg border border-divider bg-background px-6 py-3 text-base font-semibold text-text-heading hover:bg-surface-hover focus:outline-none focus:ring-2 focus:ring-text-heading focus:ring-offset-2 transition-all"
             >
               <svg
                 className="h-5 w-5"
@@ -109,8 +109,8 @@ export default function Hero() {
               <div className="flex w-min items-center justify-center gap-2 sm:gap-3">
                 {STAGES.map((stage, i) => (
                   <div key={stage} className="flex items-center">
-                    <div className="flex flex-col items-center rounded-lg border border-zinc-200 bg-white px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900/50 sm:px-4 sm:py-3">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                    <div className="flex flex-col items-center rounded-lg border border-divider bg-background px-3 py-2 sm:px-4 sm:py-3">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-text-muted-token">
                         {stage}
                       </span>
                       <div className="mt-2 flex -space-x-1">
@@ -118,7 +118,7 @@ export default function Hero() {
                           PIPELINE_CANDIDATES[stage].map((c) => (
                             <div
                               key={c.initials}
-                              className={`flex h-5 w-5 items-center justify-center rounded-full text-[8px] font-bold text-white ring-1 ring-white dark:ring-zinc-900 ${c.color}`}
+                              className={`flex h-5 w-5 items-center justify-center rounded-full text-[8px] font-bold text-white ring-1 ring-background ${c.color}`}
                             >
                               {c.initials}
                             </div>
@@ -131,7 +131,7 @@ export default function Hero() {
 
                     {i < STAGES.length - 1 && (
                       <svg
-                        className="mx-1 h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-600 sm:mx-2"
+                        className="mx-1 h-4 w-4 shrink-0 text-text-faint sm:mx-2"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth="2"

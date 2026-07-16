@@ -13,7 +13,7 @@ export default function ImportCandidatesPage() {
       <div className="mb-6">
         <Link
           href="/dashboard/candidates/list"
-          className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-text-muted-token hover:text-text-heading transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to candidates
@@ -21,8 +21,8 @@ export default function ImportCandidatesPage() {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-xl font-semibold text-zinc-900 dark:text-white m-0">Import candidates</h1>
-        <p className="mt-1 text-sm text-zinc-500 m-0">
+        <h1 className="text-xl font-semibold text-text-heading m-0">Import candidates</h1>
+        <p className="mt-1 text-sm text-text-muted-token m-0">
           Upload a CSV file to add multiple candidates at once.
         </p>
       </div>
@@ -33,20 +33,20 @@ export default function ImportCandidatesPage() {
         }}
       />
 
-      <div className="mt-8 max-w-xl rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-5">
-        <h3 className="text-sm font-semibold text-zinc-900 dark:text-white m-0 mb-3">CSV format</h3>
-        <p className="text-xs text-zinc-500 m-0 mb-3">
+      <div className="mt-8 max-w-xl rounded-2xl border border-divider bg-background shadow-sm p-5">
+        <h3 className="text-sm font-semibold text-text-heading m-0 mb-3">CSV format</h3>
+        <p className="text-xs text-text-muted-token m-0 mb-3">
           Your CSV should include the following columns. Columns marked with * are required.
         </p>
-        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-zinc-50 dark:bg-zinc-950/50 p-4 font-mono text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-          <span className="text-zinc-700 dark:text-zinc-300">NAME</span>,<span className="text-orange-500 dark:text-orange-400">EMAIL*</span>,<span className="text-zinc-700 dark:text-zinc-300">PHONE</span>,<span className="text-zinc-700 dark:text-zinc-300">JOB TITLE</span>,<span className="text-zinc-700 dark:text-zinc-300">NOTES</span>,<span className="text-zinc-700 dark:text-zinc-300">RESUME URL</span>
+        <div className="rounded-xl border border-divider bg-surface p-4 font-mono text-xs text-text-muted-token leading-relaxed">
+          <span className="text-text-heading">NAME</span>,<span className="text-orange-500 dark:text-orange-400">EMAIL*</span>,<span className="text-text-heading">PHONE</span>,<span className="text-text-heading">JOB TITLE</span>,<span className="text-text-heading">NOTES</span>,<span className="text-text-heading">RESUME URL</span>
         </div>
-        <ul className="mt-3 space-y-1.5 text-xs text-zinc-500 list-none pl-0">
+        <ul className="mt-3 space-y-1.5 text-xs text-text-muted-token list-none pl-0">
           <li>
             <span className="text-orange-500 dark:text-orange-400 font-medium">EMAIL</span> — used to detect duplicates; candidates with an existing email for the same job are skipped.
           </li>
           <li>
-            <span className="text-zinc-700 dark:text-zinc-300 font-medium">JOB TITLE</span> — matched against existing job titles. If no match is found the row is skipped.
+            <span className="text-text-heading font-medium">JOB TITLE</span> — matched against existing job titles. If no match is found the row is skipped.
           </li>
         </ul>
       </div>

@@ -32,14 +32,14 @@ export default function Sidebar() {
     : "??";
 
   return (
-    <aside className="hidden md:flex w-60 flex-col bg-[#f4f4f5] p-5 border-r border-[#e5e7eb]">
+    <aside className="hidden md:flex w-60 flex-col bg-surface p-5 border-r border-divider">
       {/* ── Logo / Wordmark ── */}
       <div className="mb-8 flex items-center gap-2 px-2">
         <span className="relative flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
           <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500" />
         </span>
-        <span className="text-xl font-black tracking-tight text-[#111827]">
+        <span className="text-xl font-black tracking-tight text-text-heading">
           HireTrack
         </span>
       </div>
@@ -59,13 +59,13 @@ export default function Sidebar() {
               href={item.href}
               className={`group relative flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 ${
                 active
-                  ? "bg-[#f0f0f2] text-[#111827] border-l-2 border-orange-500"
-                  : "text-[#6b7280] hover:bg-[#f0f0f2] hover:text-[#111827] border-l-2 border-transparent"
+                  ? "bg-surface-hover text-text-heading border-l-2 border-orange-500"
+                  : "text-text-muted-token hover:bg-surface-hover hover:text-text-heading border-l-2 border-transparent"
               }`}
             >
               <Icon
                 className={`h-5 w-5 shrink-0 ${
-                  active ? "text-orange-400" : "text-[#9ca3af] group-hover:text-[#6b7280]"
+                  active ? "text-orange-400" : "text-text-faint group-hover:text-text-muted-token"
                 }`}
                 strokeWidth={1.75}
               />
@@ -76,8 +76,8 @@ export default function Sidebar() {
 
         {user?.role === "admin" && (
           <>
-            <div className="my-2 border-t border-[#e5e7eb]" />
-            <span className="px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-[#6b7280]">Admin</span>
+            <div className="my-2 border-t border-divider" />
+            <span className="px-4 py-1 text-[10px] font-semibold uppercase tracking-widest text-text-muted-token">Admin</span>
             {adminItems.map((item) => {
               const active = pathname.startsWith(item.href);
               const Icon = item.icon;
@@ -87,13 +87,13 @@ export default function Sidebar() {
                   href={item.href}
                   className={`group relative flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-150 ${
                     active
-                      ? "bg-[#f0f0f2] text-[#111827] border-l-2 border-orange-500"
-                      : "text-[#6b7280] hover:bg-[#f0f0f2] hover:text-[#111827] border-l-2 border-transparent"
+                      ? "bg-surface-hover text-text-heading border-l-2 border-orange-500"
+                      : "text-text-muted-token hover:bg-surface-hover hover:text-text-heading border-l-2 border-transparent"
                   }`}
                 >
                   <Icon
                     className={`h-5 w-5 shrink-0 ${
-                      active ? "text-orange-400" : "text-[#9ca3af] group-hover:text-[#6b7280]"
+                      active ? "text-orange-400" : "text-text-faint group-hover:text-text-muted-token"
                     }`}
                     strokeWidth={1.75}
                   />
@@ -113,10 +113,10 @@ export default function Sidebar() {
               {initials}
             </div>
             <div className="min-w-0">
-              <div className="text-sm font-medium text-[#111827] truncate">
+              <div className="text-sm font-medium text-text-heading truncate">
                 {user?.name || "User"}
               </div>
-              <div className="text-xs text-[#6b7280] truncate">
+              <div className="text-xs text-text-muted-token truncate">
                 {user?.email || ""}
               </div>
             </div>
@@ -126,9 +126,9 @@ export default function Sidebar() {
 
         <button
           onClick={logout}
-          className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-[#6b7280] transition-all duration-150 hover:bg-[#f0f0f2] hover:text-[#111827]"
+          className="flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium text-text-muted-token transition-all duration-150 hover:bg-surface-hover hover:text-text-heading"
         >
-          <LogOut className="h-5 w-5 shrink-0 text-[#6b7280]" strokeWidth={1.75} />
+          <LogOut className="h-5 w-5 shrink-0 text-text-muted-token" strokeWidth={1.75} />
           <span>Logout</span>
         </button>
       </div>

@@ -13,7 +13,6 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState(currentPath);
 
-  // Scroll detection to update header shadow and border
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 15) {
@@ -39,8 +38,8 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 border-b border-[#e5e7eb]/60 shadow-sm backdrop-blur-md"
-          : "bg-white/90 border-b border-transparent backdrop-blur-sm"
+          ? "bg-background/95 border-b border-border-theme/60 shadow-sm backdrop-blur-md"
+          : "bg-background/90 border-b border-transparent backdrop-blur-sm"
       }`}
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
@@ -53,7 +52,7 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-600"></span>
               </span>
-              <span className="text-xl font-black tracking-tight text-[#111827] transition-colors duration-200 group-hover:text-orange-600">
+              <span className="text-xl font-black tracking-tight text-text-heading transition-colors duration-200 group-hover:text-orange-600">
                 HireTrack
               </span>
             </Link>
@@ -72,12 +71,11 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
                   }}
                   className={`text-sm font-medium transition-all duration-200 relative py-1.5 ${
                     isActive
-                      ? "text-[#111827] font-bold"
-                      : "text-[#6b7280] hover:text-[#111827]"
+                      ? "text-text-heading font-bold"
+                      : "text-text-muted-token hover:text-text-heading"
                   }`}
                 >
                   {link.name}
-                  {/* Subtle dynamic underline dot for active link */}
                   {isActive && (
                     <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-orange-600 transition-all duration-300" />
                   )}
@@ -91,13 +89,13 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
             <ThemeToggle />
             <Link
               href="/login"
-              className="rounded-full bg-[#111827] px-6 py-2.5 text-sm font-medium text-white hover:bg-[#1f2937] focus:outline-none focus:ring-2 focus:ring-[#111827] focus:ring-offset-2 transition-all shadow-sm hover:shadow"
+              className="rounded-full bg-text-heading px-6 py-2.5 text-sm font-medium text-white hover:bg-text-heading/80 focus:outline-none focus:ring-2 focus:ring-text-heading focus:ring-offset-2 transition-all shadow-sm hover:shadow"
             >
               Get Started
             </Link>
             <Link
               href="/login"
-              className="group flex h-10 w-10 items-center justify-center rounded-full bg-[#111827] text-white hover:bg-[#1f2937] focus:outline-none focus:ring-2 focus:ring-[#111827] focus:ring-offset-2 transition-all shadow-sm hover:shadow"
+              className="group flex h-10 w-10 items-center justify-center rounded-full bg-text-heading text-white hover:bg-text-heading/80 focus:outline-none focus:ring-2 focus:ring-text-heading focus:ring-offset-2 transition-all shadow-sm hover:shadow"
               aria-label="Get Started Arrow"
             >
               <svg
@@ -118,11 +116,10 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
 
           {/* Mobile Hamburger Button */}
           <div className="flex md:hidden items-center gap-4">
-            {/* Show buttons on smaller screens as well, just smaller */}
             <div className="flex sm:hidden items-center gap-2">
               <Link
                 href="/login"
-                className="rounded-full bg-[#111827] px-4 py-2 text-xs font-medium text-white hover:bg-[#1f2937] transition-colors shadow-sm"
+                className="rounded-full bg-text-heading px-4 py-2 text-xs font-medium text-white hover:bg-text-heading/80 transition-colors shadow-sm"
               >
                 Get Started
               </Link>
@@ -132,7 +129,7 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-lg p-2 text-[#6b7280] hover:bg-[#f0f0f2] hover:text-[#111827] focus:outline-none"
+              className="rounded-lg p-2 text-text-muted-token hover:bg-surface-hover hover:text-text-heading focus:outline-none"
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
@@ -167,7 +164,7 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
 
       {/* Mobile Navigation Dropdown Overlay */}
       <div
-        className={`md:hidden absolute top-full left-0 w-full bg-white/95 border-b border-[#e5e7eb] shadow-lg backdrop-blur-md transition-all duration-300 ease-in-out ${
+        className={`md:hidden absolute top-full left-0 w-full bg-background/95 border-b border-border-theme shadow-lg backdrop-blur-md transition-all duration-300 ease-in-out ${
           mobileMenuOpen
             ? "opacity-100 translate-y-0 visible"
             : "opacity-0 -translate-y-4 invisible pointer-events-none"
@@ -187,8 +184,8 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
                   }}
                   className={`text-base font-semibold py-1 transition-colors ${
                     isActive
-                      ? "text-[#111827]"
-                      : "text-[#6b7280] hover:text-[#111827]"
+                      ? "text-text-heading"
+                      : "text-text-muted-token hover:text-text-heading"
                   }`}
                 >
                   {link.name}
@@ -197,11 +194,10 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
             })}
           </nav>
           
-          {/* Mobile CTA button (hidden on desktop/tablet) */}
-          <div className="flex sm:hidden items-center gap-3 pt-2 border-t border-[#e5e7eb]/50">
+          <div className="flex sm:hidden items-center gap-3 pt-2 border-t border-border-theme/50">
             <Link
               href="/login"
-              className="w-full text-center rounded-full bg-[#111827] py-3 text-sm font-medium text-white hover:bg-[#1f2937] transition-colors"
+              className="w-full text-center rounded-full bg-text-heading py-3 text-sm font-medium text-white hover:bg-text-heading/80 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Get Started

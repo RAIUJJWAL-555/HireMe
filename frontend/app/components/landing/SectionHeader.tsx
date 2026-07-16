@@ -22,13 +22,13 @@ export default function SectionHeader({
         </span>
       )}
 
-      {/* Bold Large Heading (32-36px, dark navy/black) */}
-      <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#111827] leading-tight">
+      {/* Bold Large Heading */}
+      <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-text-heading leading-tight">
         {title}
       </h2>
 
-      {/* Muted-gray Subtext Paragraph (max-width constrained for readability) */}
-      <p className="mt-4 text-base sm:text-lg text-[#6b7280] max-w-2xl mx-auto leading-relaxed">
+      {/* Muted-gray Subtext Paragraph */}
+      <p className="mt-4 text-base sm:text-lg text-text-muted-token max-w-2xl mx-auto leading-relaxed">
         {description}
       </p>
     </div>

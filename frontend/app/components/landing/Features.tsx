@@ -129,7 +129,7 @@ export default function Features() {
     <section
       id="features"
       ref={ref}
-      className="border-t border-[#e5e7eb] bg-[#fafafa]/40 py-20 sm:py-28"
+      className="border-t border-border-theme bg-surface/40 py-20 sm:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
@@ -143,7 +143,7 @@ export default function Features() {
             {FEATURES.map((feature, i) => (
               <div
                 key={feature.title}
-                className={`rounded-xl border border-[#e5e7eb] bg-white p-6 shadow-sm hover:border-[#d1d5db] transition-all duration-200 ${
+                className={`rounded-xl border border-border-theme bg-background p-6 shadow-sm hover:border-divider-strong transition-all duration-200 ${
                   visible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-4"
@@ -156,10 +156,10 @@ export default function Features() {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-orange-50 text-orange-600">
                   {feature.icon}
                 </div>
-                <h3 className="text-base font-semibold text-[#111827]">
+                <h3 className="text-base font-semibold text-text-heading">
                   {feature.title}
                 </h3>
-                <p className="mt-2.5 text-sm text-[#6b7280] leading-normal">
+                <p className="mt-2.5 text-sm text-text-muted-token leading-normal">
                   {feature.description}
                 </p>
               </div>

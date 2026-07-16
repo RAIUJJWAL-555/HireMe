@@ -73,7 +73,7 @@ export default function JobForm({ initialData, jobId }: JobFormProps) {
       )}
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-zinc-500 dark:text-zinc-400">
+        <label htmlFor="title" className="block text-sm font-medium text-text-muted-token">
           Title
         </label>
         <input
@@ -81,12 +81,12 @@ export default function JobForm({ initialData, jobId }: JobFormProps) {
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-2 block w-full rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          className="mt-2 block w-full rounded-xl border border-divider bg-surface px-4 py-3 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-zinc-500 dark:text-zinc-400">
+        <label htmlFor="description" className="block text-sm font-medium text-text-muted-token">
           Description
         </label>
         <textarea
@@ -95,12 +95,12 @@ export default function JobForm({ initialData, jobId }: JobFormProps) {
           rows={6}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-2 block w-full rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors resize-y"
+          className="mt-2 block w-full rounded-xl border border-divider bg-surface px-4 py-3 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors resize-y"
         />
       </div>
 
       <div>
-        <label htmlFor="qualification" className="block text-sm font-medium text-zinc-500 dark:text-zinc-400">
+        <label htmlFor="qualification" className="block text-sm font-medium text-text-muted-token">
           Qualification
         </label>
         <input
@@ -109,19 +109,19 @@ export default function JobForm({ initialData, jobId }: JobFormProps) {
           value={qualification}
           onChange={(e) => setQualification(e.target.value)}
           placeholder="e.g. B.Tech, MBA, B.Sc"
-          className="mt-2 block w-full rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          className="mt-2 block w-full rounded-xl border border-divider bg-surface px-4 py-3 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
         />
       </div>
 
       <div>
-        <label htmlFor="experience" className="block text-sm font-medium text-zinc-500 dark:text-zinc-400">
+        <label htmlFor="experience" className="block text-sm font-medium text-text-muted-token">
           Experience
         </label>
         <select
           id="experience"
           value={experience}
           onChange={(e) => setExperience(e.target.value)}
-          className="mt-2 block w-full rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          className="mt-2 block w-full rounded-xl border border-divider bg-surface px-4 py-3 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
         >
           {EXPERIENCE_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -133,14 +133,14 @@ export default function JobForm({ initialData, jobId }: JobFormProps) {
 
       {isEdit && (
         <div>
-          <label htmlFor="status" className="block text-sm font-medium text-zinc-500 dark:text-zinc-400">
+          <label htmlFor="status" className="block text-sm font-medium text-text-muted-token">
             Status
           </label>
           <select
             id="status"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="mt-2 block w-full rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="mt-2 block w-full rounded-xl border border-divider bg-surface px-4 py-3 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           >
             <option value="open">Open</option>
             <option value="closed">Closed</option>
@@ -152,14 +152,14 @@ export default function JobForm({ initialData, jobId }: JobFormProps) {
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-xl bg-orange-500 px-6 py-2.5 text-sm font-medium text-zinc-900 dark:text-white hover:bg-orange-600 disabled:opacity-50 transition-all shadow-sm hover:shadow"
+          className="rounded-xl bg-orange-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-orange-600 disabled:opacity-50 transition-all shadow-sm hover:shadow"
         >
           {submitting ? "Saving..." : isEdit ? "Update Job" : "Create Job"}
         </button>
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded-xl border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-6 py-2.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-600 transition-colors"
+          className="rounded-xl border border-divider bg-surface px-6 py-2.5 text-sm text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
         >
           Cancel
         </button>

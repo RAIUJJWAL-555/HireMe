@@ -74,17 +74,17 @@ export default function CandidateCardsPage() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 md:px-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-semibold text-zinc-900 dark:text-white m-0">Candidates</h1>
+        <h1 className="text-xl font-semibold text-text-heading m-0">Candidates</h1>
         <div className="flex items-center gap-2">
           <Link
             href="/dashboard/candidates"
-            className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+            className="rounded-full border border-divider bg-surface px-4 py-2 text-xs text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
           >
             Kanban View
           </Link>
           <Link
             href="/dashboard/candidates/list"
-            className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
+            className="rounded-full border border-divider bg-surface px-4 py-2 text-xs text-text-muted-token hover:text-text-heading hover:border-divider-strong transition-colors"
           >
             List View
           </Link>
@@ -97,12 +97,12 @@ export default function CandidateCardsPage() {
           placeholder="Search by name or email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 min-w-0 rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 placeholder-zinc-400 dark:placeholder-zinc-500 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          className="flex-1 min-w-0 rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading placeholder-text-faint focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
         />
         <select
           value={stageFilter}
           onChange={(e) => setStageFilter(e.target.value)}
-          className="min-w-0 sm:min-w-[140px] rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          className="min-w-0 sm:min-w-[140px] rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
         >
           {STAGES.map((s) => (
             <option key={s} value={s}>{s || "All stages"}</option>
@@ -111,7 +111,7 @@ export default function CandidateCardsPage() {
         <select
           value={jobFilter}
           onChange={(e) => setJobFilter(e.target.value)}
-          className="min-w-0 sm:min-w-[180px] rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          className="min-w-0 sm:min-w-[180px] rounded-full border border-divider bg-surface px-4 py-2 text-sm text-text-heading focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
         >
           <option value="">All jobs</option>
           {jobs.map((job) => (
@@ -123,16 +123,16 @@ export default function CandidateCardsPage() {
       {loading ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-            <div key={i} className="rounded-2xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800/60 p-5 animate-pulse">
+            <div key={i} className="rounded-2xl bg-background border border-divider p-5 animate-pulse">
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-11 w-11 rounded-full bg-zinc-200 dark:bg-zinc-700/30 shrink-0" />
+                <div className="h-11 w-11 rounded-full bg-surface shrink-0" />
                 <div className="flex-1">
-                  <div className="h-4 w-28 rounded bg-zinc-200 dark:bg-zinc-700/30 mb-2" />
-                  <div className="h-3 w-36 rounded bg-zinc-200 dark:bg-zinc-700/30" />
+                  <div className="h-4 w-28 rounded bg-surface mb-2" />
+                  <div className="h-3 w-36 rounded bg-surface" />
                 </div>
               </div>
-              <div className="h-3 w-20 rounded bg-zinc-200 dark:bg-zinc-700/30 mb-3" />
-              <div className="h-2 w-full rounded-full bg-zinc-200 dark:bg-zinc-700/30" />
+              <div className="h-3 w-20 rounded bg-surface mb-3" />
+              <div className="h-2 w-full rounded-full bg-surface" />
             </div>
           ))}
         </div>
@@ -156,7 +156,7 @@ export default function CandidateCardsPage() {
               <div
                 key={candidate.id}
                 onClick={() => router.push(`/dashboard/candidates/${candidate.id}`)}
-                className="group rounded-2xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800/60 p-5 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/30 hover:border-zinc-300 dark:hover:border-zinc-700/60"
+                className="group rounded-2xl bg-background border border-divider p-5 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/30 hover:border-divider-strong"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div
@@ -166,18 +166,18 @@ export default function CandidateCardsPage() {
                     {initials}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white truncate m-0 group-hover:text-orange-400 transition-colors">
+                    <h3 className="text-sm font-semibold text-text-heading truncate m-0 group-hover:text-orange-400 transition-colors">
                       {candidate.name}
                     </h3>
-                    <p className="text-xs text-zinc-500 truncate m-0 mt-0.5">
+                    <p className="text-xs text-text-muted-token truncate m-0 mt-0.5">
                       {candidate.email}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 mb-3 text-xs text-zinc-500">
+                <div className="flex items-center gap-2 mb-3 text-xs text-text-muted-token">
                   <span className="truncate">{candidate.job.title}</span>
-                  <span className="text-zinc-400 dark:text-zinc-700">&middot;</span>
+                  <span className="text-text-faint">&middot;</span>
                   <span className="shrink-0">
                     {new Date(candidate.createdAt).toLocaleDateString("en-US", {
                       month: "short",
@@ -195,7 +195,7 @@ export default function CandidateCardsPage() {
                       {candidate.currentStage}
                     </span>
                   ) : (
-                    <span className="inline-block rounded-full px-2.5 py-0.5 text-[11px] font-medium bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-500">
+                    <span className="inline-block rounded-full px-2.5 py-0.5 text-[11px] font-medium bg-surface text-text-muted-token">
                       {candidate.currentStage}
                     </span>
                   )}
@@ -206,7 +206,7 @@ export default function CandidateCardsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1 text-[11px] text-zinc-500 hover:text-orange-400 transition-colors"
+                      className="inline-flex items-center gap-1 text-[11px] text-text-muted-token hover:text-orange-400 transition-colors"
                     >
                       <ExternalLink className="h-3 w-3" />
                       Resume
