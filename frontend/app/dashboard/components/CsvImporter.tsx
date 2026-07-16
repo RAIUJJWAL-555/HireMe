@@ -4,11 +4,13 @@ import { useState, useRef, useCallback } from "react";
 import { UploadCloud, FileSpreadsheet, X, ChevronDown, ChevronUp, Check, AlertTriangle, SkipForward } from "lucide-react";
 import { useToast } from "../../context/ToastContext";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const RAW_API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
-if (!API_BASE) {
+if (!RAW_API_BASE) {
   throw new Error("NEXT_PUBLIC_API_URL is not defined in the environment variables.");
 }
+
+const API_BASE = RAW_API_BASE.endsWith("/") ? RAW_API_BASE.slice(0, -1) : RAW_API_BASE;
 
 interface ImportResult {
   totalRows: number;
@@ -125,9 +127,9 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
           onClick={() => state === "idle" && inputRef.current?.click()}
           className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-all duration-200 ${
             dragging
-              ? "border-orange-500 bg-orange-500/[0.06] cursor-copy"
+              ? "border-orange-500 bg-orange-50 cursor-copy"
               : state === "idle"
-                ? "border-zinc-300 dark:border-zinc-700/60 bg-white dark:bg-zinc-900/50 hover:border-orange-500/50 hover:bg-orange-500/[0.03] cursor-pointer"
+                ? "border-zinc-300 dark:border-zinc-700/60 bg-white dark:bg-zinc-900/50 hover:border-orange-500/50 hover:bg-orange-50 cursor-pointer"
                 : "border-zinc-300 dark:border-zinc-700/60 bg-white dark:bg-zinc-900/50"
           }`}
         >
@@ -176,7 +178,7 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); upload(); }}
-                  className="rounded-full bg-orange-500 px-6 py-2 text-xs font-medium text-zinc-900 dark:text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow cursor-pointer"
+                  className="rounded-full bg-orange-500 px-6 py-2 text-xs font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow cursor-pointer"
                 >
                   Import candidates
                 </button>
@@ -197,7 +199,7 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
 
       {/* ── Results ── */}
       {state === "results" && results && (
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-5">
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-5">
           <h3 className="text-sm font-semibold text-zinc-900 dark:text-white m-0 mb-4">Import Summary</h3>
 
           <div className="flex flex-wrap gap-3 mb-4">
@@ -223,7 +225,7 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
             <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-zinc-50 dark:bg-zinc-950/50 overflow-hidden">
               <button
                 onClick={() => setErrorsExpanded(!errorsExpanded)}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-white/[0.02] transition-colors cursor-pointer bg-transparent border-none"
+                className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 transition-colors cursor-pointer bg-transparent border-none"
               >
                 <span>Error details ({results.errors.length})</span>
                 {errorsExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -247,7 +249,7 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
             {results.imported > 0 && (
               <a
                 href="/dashboard/candidates/list"
-                className="rounded-full bg-orange-500 px-5 py-2 text-xs font-medium text-zinc-900 dark:text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
+                className="rounded-full bg-orange-500 px-5 py-2 text-xs font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
               >
                 View Candidates
               </a>

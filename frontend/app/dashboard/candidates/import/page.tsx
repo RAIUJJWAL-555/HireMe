@@ -33,7 +33,7 @@ export default function ImportCandidatesPage() {
         }}
       />
 
-      <div className="mt-8 max-w-xl rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-5">
+      <div className="mt-8 max-w-xl rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-5">
         <h3 className="text-sm font-semibold text-zinc-900 dark:text-white m-0 mb-3">CSV format</h3>
         <p className="text-xs text-zinc-500 m-0 mb-3">
           Your CSV should include the following columns. Columns marked with * are required.

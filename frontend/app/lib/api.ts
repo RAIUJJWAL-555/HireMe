@@ -1,8 +1,11 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+const RAW_API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
-if (!API_BASE) {
+if (!RAW_API_BASE) {
   throw new Error("NEXT_PUBLIC_API_URL is not defined in the environment variables.");
 }
+
+// Strip trailing slash to avoid double slashes (e.g. //auth/login) during joins
+const API_BASE = RAW_API_BASE.endsWith("/") ? RAW_API_BASE.slice(0, -1) : RAW_API_BASE;
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -13,9 +16,10 @@ export class ApiError extends Error {
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
   let res: Response;
   try {
-    res = await fetch(`${API_BASE}${path}`, {
+    res = await fetch(`${API_BASE}${cleanPath}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",

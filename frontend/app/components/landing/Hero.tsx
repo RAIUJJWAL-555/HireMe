@@ -131,7 +131,7 @@ export default function Hero() {
 
                     {i < STAGES.length - 1 && (
                       <svg
-                        className="mx-1 h-4 w-4 shrink-0 text-zinc-300 dark:text-zinc-600 sm:mx-2"
+                        className="mx-1 h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-600 sm:mx-2"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth="2"

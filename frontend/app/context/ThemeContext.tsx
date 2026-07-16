@@ -6,42 +6,49 @@ type Theme = "light" | "dark";
 
 interface ThemeContextType {
   theme: Theme;
+  setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "light",
+  theme: "dark",
+  setTheme: () => {},
   toggleTheme: () => {},
 });
 
+function applyTheme(theme: Theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+
     const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored) {
-      setTheme(stored);
-      document.documentElement.classList.toggle("dark", stored === "dark");
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initial: Theme = prefersDark ? "dark" : "light";
-      setTheme(initial);
-      document.documentElement.classList.toggle("dark", initial === "dark");
-    }
+    const initial: Theme = stored === "light" || stored === "dark"
+      ? stored
+      : "dark";                          // default to dark
+
+    setThemeState(initial);
+    applyTheme(initial);
+  }, []);
+
+  const setTheme = useCallback((next: Theme) => {
+    setThemeState(next);
+    localStorage.setItem("theme", next);
+    applyTheme(next);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setTheme((prev) => {
-      const next: Theme = prev === "light" ? "dark" : "light";
-      localStorage.setItem("theme", next);
-      document.documentElement.classList.toggle("dark", next === "dark");
-      return next;
-    });
-  }, []);
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }, [setTheme]);
 
-  const value = mounted ? { theme, toggleTheme } : { theme, toggleTheme: () => {} };
+  const value = mounted
+    ? { theme, setTheme, toggleTheme }
+    : { theme, setTheme: () => {}, toggleTheme: () => {} };
 
   return (
     <ThemeContext.Provider value={value}>

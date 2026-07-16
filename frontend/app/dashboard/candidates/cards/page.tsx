@@ -177,7 +177,7 @@ export default function CandidateCardsPage() {
 
                 <div className="flex items-center gap-2 mb-3 text-xs text-zinc-500">
                   <span className="truncate">{candidate.job.title}</span>
-                  <span className="text-zinc-300 dark:text-zinc-700">&middot;</span>
+                  <span className="text-zinc-400 dark:text-zinc-700">&middot;</span>
                   <span className="shrink-0">
                     {new Date(candidate.createdAt).toLocaleDateString("en-US", {
                       month: "short",

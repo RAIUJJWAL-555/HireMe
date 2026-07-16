@@ -205,7 +205,7 @@ export default function UsersPage() {
                 <tr key={u.id} className="border-b border-zinc-200 dark:border-zinc-800/60">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-700/50 text-xs font-bold text-white">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-700/50 text-xs font-bold text-zinc-600 dark:text-white">
                         {u.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()}
                       </div>
                       <span className="font-medium text-zinc-900 dark:text-white">{u.name}</span>

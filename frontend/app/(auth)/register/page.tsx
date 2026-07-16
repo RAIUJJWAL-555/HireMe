@@ -30,7 +30,7 @@ export default function RegisterPage() {
     <>
       <Navbar />
       <div className="flex min-h-[calc(100vh-80px)] items-center justify-center px-4">
-        <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800/60 p-8">
+        <div className="w-full max-w-sm rounded-2xl bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800/60 shadow-sm p-8">
           <Link
             href="/"
             className="mb-4 inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
@@ -104,7 +104,7 @@ export default function RegisterPage() {
 
           <p className="mt-6 text-center text-sm text-zinc-500">
             Already have an account?{" "}
-            <Link href="/login" className="font-medium text-orange-400 hover:text-orange-300 transition-colors">
+            <Link href="/login" className="font-medium text-orange-500 hover:text-orange-600 transition-colors">
               Sign in
             </Link>
           </p>

@@ -118,7 +118,7 @@ export default function CandidateDetailPage() {
         </button>
 
         {/* ── Profile card ── */}
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-4 md:p-6 mb-4">
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
           <div className="flex items-start gap-4">
             <div
               className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
@@ -146,7 +146,7 @@ export default function CandidateDetailPage() {
 
               <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-500">
                 <span className="rounded-full bg-zinc-100 dark:bg-zinc-800/80 px-2.5 py-0.5">{candidate.job.title}</span>
-                <span className="text-zinc-300 dark:text-zinc-700">&middot;</span>
+                <span className="text-zinc-400 dark:text-zinc-700">&middot;</span>
                 <span>Applied {new Date(candidate.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
               </div>
 
@@ -164,7 +164,7 @@ export default function CandidateDetailPage() {
                       href={candidate.resumeUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-orange-400 hover:text-orange-300 underline underline-offset-2 transition-colors break-all"
+                      className="text-orange-500 hover:text-orange-600 underline underline-offset-2 transition-colors break-all"
                     >
                       {candidate.resumeUrl}
                     </a>
@@ -177,7 +177,7 @@ export default function CandidateDetailPage() {
 
         {/* ── Stage change ── */}
         {VALID_TRANSITIONS[candidate.currentStage]?.length > 0 && (
-          <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-4 md:p-6 mb-4">
+          <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
             <h2 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 m-0 mb-3 uppercase tracking-wider">Move to</h2>
             <div className="flex flex-wrap gap-2">
               {VALID_TRANSITIONS[candidate.currentStage].map((stage) => {
@@ -203,7 +203,7 @@ export default function CandidateDetailPage() {
         )}
 
         {/* ── Notes ── */}
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-4 md:p-6 mb-4">
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
           <h2 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 m-0 mb-3 uppercase tracking-wider">Notes</h2>
           <textarea
             value={notes}
@@ -224,7 +224,7 @@ export default function CandidateDetailPage() {
         </div>
 
         {/* ── Stage History ── */}
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-4 md:p-6">
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6">
           <h2 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 m-0 mb-4 uppercase tracking-wider">Stage History</h2>
           {candidate.stageHistory.length === 0 ? (
             <HistoryEmptyState />

@@ -1,62 +1,126 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --bg-primary: #ffffff;
-  --bg-secondary: #fafafa;
-  --bg-tertiary: #f4f4f5;
-  --bg-elevated: #ffffff;
-  --border-default: #e4e4e7;
-  --border-strong: #d4d4d8;
-  --text-primary: #18181b;
-  --text-secondary: #52525b;
-  --text-muted: #71717a;
-  --text-faint: #a1a1aa;
-  --input-bg: #ffffff;
-  --table-header-bg: #fafafa;
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --chart-grid: #f0f0f0;
-  --chart-tooltip-bg: rgba(0, 0, 0, 0.03);
-}
+/* ── Tailwind v4: teach the `dark:` variant to match data-theme ── */
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-.dark {
+/* ══════════════════════════════════════════════════════════════════
+   CSS Custom Properties — Dark (default) & Light themes
+   :root carries dark values so there is zero flash before JS runs.
+   [data-theme="light"] overrides with light values once set.
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Base surfaces ── */
   --background: #09090b;
   --foreground: #fafafa;
   --bg-primary: #09090b;
   --bg-secondary: #18181b;
   --bg-tertiary: #27272a;
   --bg-elevated: #18181b;
+
+  /* ── Borders ── */
   --border-default: #27272a;
   --border-strong: #3f3f46;
+
+  /* ── Text ── */
   --text-primary: #fafafa;
   --text-secondary: #a1a1aa;
   --text-muted: #a1a1aa;
   --text-faint: #71717a;
+
+  /* ── Inputs / tables ── */
   --input-bg: #18181b;
   --table-header-bg: #18181b;
+
+  /* ── Shadows / charts ── */
   --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   --chart-grid: #27272a;
   --chart-tooltip-bg: rgba(255, 255, 255, 0.05);
+
+  /* ── Semantic tokens (user-requested) ── */
+  --bg-page: #0a0a0a;
+  --bg-surface: #1a1a1a;
+  --text-heading: #ffffff;
+  --text-muted-token: #9ca3af;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent-orange: #f97316;
+  --accent-blue: #60a5fa;
 }
 
+:root[data-theme="light"] {
+  /* ── Base surfaces ── */
+  --background: #ffffff;
+  --foreground: #171717;
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f4f4f5;
+  --bg-elevated: #ffffff;
+
+  /* ── Borders ── */
+  --border-default: #e4e4e7;
+  --border-strong: #d4d4d8;
+
+  /* ── Text ── */
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-faint: #a1a1aa;
+
+  /* ── Inputs / tables ── */
+  --input-bg: #ffffff;
+  --table-header-bg: #fafafa;
+
+  /* ── Shadows / charts ── */
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --chart-grid: #f0f0f0;
+  --chart-tooltip-bg: rgba(0, 0, 0, 0.03);
+
+  /* ── Semantic tokens (user-requested) ── */
+  --bg-page: #ffffff;
+  --bg-surface: #f4f4f5;
+  --text-heading: #111827;
+  --text-muted-token: #6b7280;
+  --border-color: #e5e7eb;
+  --accent-orange: #f97316;
+  --accent-blue: #3b82f6;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Tailwind @theme — maps CSS vars → Tailwind utility tokens
+   Classes like bg-background, text-heading, border-divider, etc.
+   automatically respond to the active data-theme.
+   ══════════════════════════════════════════════════════════════════ */
+
 @theme inline {
+  /* ── Core palette ── */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* ── Design token utilities ── */
+  /* ── Surface tokens ── */
   --color-base: var(--bg-primary);
   --color-surface: var(--bg-secondary);
   --color-surface-hover: var(--bg-tertiary);
   --color-surface-alt: var(--bg-elevated);
 
+  /* ── Semantic tokens (user-requested) ── */
+  --color-bg-page: var(--bg-page);
+  --color-bg-surface: var(--bg-surface);
+  --color-text-heading: var(--text-heading);
+  --color-text-muted-token: var(--text-muted-token);
+  --color-border-theme: var(--border-color);
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-blue: var(--accent-blue);
+
+  /* ── Brand accent (orange) ── */
   --color-primary: #f97316;
   --color-primary-hover: #ea580c;
   --color-primary-muted: #fb923c;
 
+  /* ── Dividers ── */
   --color-divider: var(--border-default);
   --color-divider-strong: var(--border-strong);
 
+  /* ── Kanban stage colors (constant across themes) ── */
   --color-stage-applied: #3b82f6;
   --color-stage-screening: #f59e0b;
   --color-stage-interview: #8b5cf6;
@@ -64,8 +128,11 @@
   --color-stage-hired: #22c55e;
   --color-stage-rejected: #ef4444;
 
+  /* ── Typography ── */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* ── Animations ── */
   --animate-float-slow: float-slow 6s ease-in-out infinite;
   --animate-float-delayed: float-slow 6s ease-in-out infinite 2s;
 
@@ -74,6 +141,10 @@
     50% { transform: translateY(-8px); }
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   Base element styles — driven by CSS vars, auto-switch with theme
+   ══════════════════════════════════════════════════════════════════ */
 
 body {
   background: var(--bg-primary);
@@ -84,4 +155,16 @@ body {
 
 ::selection {
   background: rgba(249, 115, 22, 0.3);
+}
+
+/* ── Respect prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

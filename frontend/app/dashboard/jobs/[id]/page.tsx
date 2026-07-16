@@ -69,20 +69,20 @@ export default function JobDetailPage() {
           &larr; Back
         </button>
 
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-4 md:p-6 mb-4">
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6 mb-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <h1 className="text-2xl font-semibold text-zinc-900 dark:text-white m-0 break-words">{job.title}</h1>
               <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-zinc-500">
                 <span className="rounded-full bg-zinc-100 dark:bg-zinc-800/80 px-2.5 py-0.5">{job.qualification}</span>
-                <span className="text-zinc-300 dark:text-zinc-700">&middot;</span>
+                <span className="text-zinc-400 dark:text-zinc-700">&middot;</span>
                 <span>{EXPERIENCE_LABELS[job.experience] || job.experience}</span>
               </div>
             </div>
             <span
               className="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
               style={{
-                backgroundColor: job.status === "open" ? colors.successBg : "rgba(255,255,255,0.06)",
+                backgroundColor: job.status === "open" ? colors.successBg : "#f4f4f5",
                 color: job.status === "open" ? colors.successMuted : colors.textMuted,
               }}
             >
@@ -110,7 +110,7 @@ export default function JobDetailPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-4 md:p-6">
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 shadow-sm p-4 md:p-6">
           <h2 className="text-base font-semibold text-zinc-900 dark:text-white m-0 mb-4">
             Candidates <span className="text-zinc-500 font-normal">({job.candidates.length})</span>
           </h2>
