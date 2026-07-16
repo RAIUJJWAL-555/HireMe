@@ -32,6 +32,18 @@ export default function Footer() {
           {/* Right — links */}
           <div className="flex gap-4">
             <a
+              href="/blog"
+              className="text-xs text-text-muted-token hover:text-text-heading transition-colors underline"
+            >
+              Blog
+            </a>
+            <a
+              href="/contact"
+              className="text-xs text-text-muted-token hover:text-text-heading transition-colors underline"
+            >
+              Contact
+            </a>
+            <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"

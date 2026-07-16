@@ -30,8 +30,8 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
     { name: "Home", href: "#" },
     { name: "Jobs", href: "#jobs" },
     { name: "Candidates", href: "#candidates" },
-    { name: "Blog", href: "#blog" },
-    { name: "Contact", href: "#contact" },
+    { name: "Blog", href: "/blog" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -63,10 +63,10 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
             {navLinks.map((link) => {
               const isActive = activeLink.toLowerCase() === link.name.toLowerCase();
               return (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
-                  onClick={(e) => {
+                  onClick={() => {
                     setActiveLink(link.name);
                   }}
                   className={`text-sm font-medium transition-all duration-200 relative py-1.5 ${
@@ -79,7 +79,7 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
                   {isActive && (
                     <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-orange-600 transition-all duration-300" />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -175,7 +175,7 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
             {navLinks.map((link) => {
               const isActive = activeLink.toLowerCase() === link.name.toLowerCase();
               return (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
                   onClick={() => {
@@ -189,7 +189,7 @@ export default function NavigationBar({ currentPath = "Home" }: NavigationBarPro
                   }`}
                 >
                   {link.name}
-                </a>
+                </Link>
               );
             })}
           </nav>
