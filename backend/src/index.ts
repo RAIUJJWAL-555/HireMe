@@ -5,6 +5,7 @@ import authRoutes from "./routes/authRoutes";
 import jobRoutes from "./routes/jobRoutes";
 import candidateRoutes from "./routes/candidateRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
+import userRoutes from "./routes/userRoutes";
 import { AppError } from "./utils/AppError";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/candidates", candidateRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/users", userRoutes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {

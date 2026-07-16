@@ -1,54 +1,134 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import DashboardHeader from "./components/DashboardHeader";
+import CandidateGrid from "./components/CandidateGrid";
+import StatsRing from "./components/StatsRing";
+import PipelineGrid from "./components/PipelineGrid";
 import { api } from "../lib/api";
+import { useToast } from "../context/ToastContext";
 
-export default function DashboardPage() {
-  const [stats, setStats] = useState<any>(null);
-
-  useEffect(() => {
-    api.get("/dashboard").then(setStats).catch(console.error);
-  }, []);
-
-  return (
-    <div style={{ maxWidth: "800px" }}>
-      <h1 style={{ fontSize: "20px", fontWeight: 600, color: "#18181b", marginBottom: "24px" }}>Dashboard</h1>
-
-      {!stats ? (
-        <div style={{ color: "#a1a1aa" }}>Loading...</div>
-      ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", marginBottom: "32px" }}>
-          <StatCard label="Open Jobs" value={stats.openJobs || 0} />
-          <StatCard label="Total Candidates" value={stats.totalCandidates || 0} />
-          <StatCard label="Hired" value={stats.hired || 0} />
-          <StatCard label="Rejected" value={stats.rejected || 0} />
-        </div>
-      )}
-
-      <div style={{ display: "flex", gap: "12px" }}>
-        <Link
-          href="/dashboard/jobs"
-          style={{ padding: "8px 16px", background: "#18181b", color: "white", borderRadius: "8px", fontSize: "14px", textDecoration: "none" }}
-        >
-          View Jobs
-        </Link>
-        <Link
-          href="/dashboard/candidates"
-          style={{ padding: "8px 16px", border: "1px solid #d4d4d8", borderRadius: "8px", fontSize: "14px", color: "#18181b", textDecoration: "none" }}
-        >
-          View Candidates
-        </Link>
-      </div>
-    </div>
-  );
+interface Stats {
+  openJobs: number;
+  totalCandidates: number;
+  hired: number;
+  rejected: number;
+  screening: number;
+  interview: number;
+  offer: number;
+  applied: number;
 }
 
-function StatCard({ label, value }: { label: string; value: number }) {
+export default function DashboardPage() {
+  const { toast } = useToast();
+  const [candidates, setCandidates] = useState<any[]>([]);
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [loadingCandidates, setLoadingCandidates] = useState(true);
+  const [loadingStats, setLoadingStats] = useState(true);
+  const [search, setSearch] = useState("");
+  const [stageFilter, setStageFilter] = useState("");
+  const [limit, setLimit] = useState(5);
+  const [totalCandidates, setTotalCandidates] = useState(0);
+
+  // Reset limit when search or stageFilter changes
+  useEffect(() => {
+    setLimit(5);
+  }, [search, stageFilter]);
+
+  // Fetch stats once on mount
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        setLoadingStats(true);
+        const statsData = await api.get<Stats>("/dashboard");
+        setStats(statsData);
+      } catch (err: any) {
+        toast("error", err.message || "Failed to load dashboard stats");
+      } finally {
+        setLoadingStats(false);
+      }
+    }
+    loadStats();
+  }, [toast]);
+
+  // Fetch candidates when search, stageFilter, or limit changes (with debounce)
+  useEffect(() => {
+    async function loadCandidates() {
+      try {
+        setLoadingCandidates(true);
+        const params = new URLSearchParams();
+        params.set("limit", limit.toString());
+        if (search) params.set("search", search);
+        if (stageFilter) params.set("stage", stageFilter);
+
+        const candidatesData = await api.get<{ candidates: any[]; pagination: { total: number } }>(`/candidates?${params}`);
+        setCandidates(candidatesData.candidates);
+        setTotalCandidates(candidatesData.pagination.total);
+      } catch (err: any) {
+        toast("error", err.message || "Failed to load candidates");
+      } finally {
+        setLoadingCandidates(false);
+      }
+    }
+
+    const timer = setTimeout(() => {
+      loadCandidates();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [search, stageFilter, limit, toast]);
+
+  const hiringRate = stats && stats.totalCandidates > 0
+    ? Math.round((stats.hired / stats.totalCandidates) * 100)
+    : 0;
+
+  const metrics = stats
+    ? [
+        { label: "Total", value: stats.totalCandidates, color: "bg-purple-500" },
+        { label: "Hired", value: stats.hired, color: "bg-teal-400" },
+        { label: "In Progress", value: stats.applied + stats.screening + stats.interview + stats.offer, color: "bg-orange-400" },
+        { label: "Rejected", value: stats.rejected, color: "bg-red-400" },
+      ]
+    : [];
+
   return (
-    <div style={{ padding: "16px", borderRadius: "12px", border: "1px solid #e4e4e7" }}>
-      <div style={{ fontSize: "12px", color: "#71717a", marginBottom: "4px" }}>{label}</div>
-      <div style={{ fontSize: "28px", fontWeight: 700, color: "#18181b" }}>{value}</div>
+    <div className="flex flex-1">
+      {/* ── Center: header + candidate grid ── */}
+      <main className="flex-1 min-w-0 p-5 md:p-6 lg:p-8">
+        <DashboardHeader
+          breadcrumbs={["Dashboard", "Candidates"]}
+          title={loadingStats ? "Candidates" : `${stats?.totalCandidates || 0} Candidates`}
+          searchValue={search}
+          onSearchChange={setSearch}
+          stageFilter={stageFilter}
+          onStageFilterChange={setStageFilter}
+        />
+        <div className="mt-6">
+          <CandidateGrid candidates={candidates} loading={loadingCandidates} />
+          {!loadingCandidates && candidates.length < totalCandidates && (
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={() => setLimit((prev) => prev + 6)}
+                className="rounded-full border border-zinc-700/50 bg-zinc-800/80 px-6 py-2 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
+              >
+                Load More
+              </button>
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* ── Right panel: stats + pipeline ── */}
+      <aside className="hidden w-80 shrink-0 flex-col gap-6 border-l border-zinc-800/60 bg-zinc-900/50 p-6 lg:flex xl:w-[340px]">
+        <StatsRing
+          label="Hired Rate"
+          value={hiringRate}
+          unit="%"
+          delta={stats?.hired || 0}
+          loading={loadingStats}
+        />
+        <PipelineGrid metrics={metrics} loading={loadingStats} />
+      </aside>
     </div>
   );
 }

@@ -3,24 +3,85 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f4f4f5;
+  --bg-elevated: #ffffff;
+  --border-default: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-faint: #a1a1aa;
+  --input-bg: #ffffff;
+  --table-header-bg: #fafafa;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --chart-grid: #f0f0f0;
+  --chart-tooltip-bg: rgba(0, 0, 0, 0.03);
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --bg-primary: #09090b;
+  --bg-secondary: #18181b;
+  --bg-tertiary: #27272a;
+  --bg-elevated: #18181b;
+  --border-default: #27272a;
+  --border-strong: #3f3f46;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #a1a1aa;
+  --text-faint: #71717a;
+  --input-bg: #18181b;
+  --table-header-bg: #18181b;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --chart-grid: #27272a;
+  --chart-tooltip-bg: rgba(255, 255, 255, 0.05);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* ── Design token utilities ── */
+  --color-base: #0a0a0a;
+  --color-surface: #1a1a1a;
+  --color-surface-hover: #222222;
+  --color-surface-alt: #2a2a2a;
+
+  --color-primary: #f97316;
+  --color-primary-hover: #ea580c;
+  --color-primary-muted: #fb923c;
+
+  --color-divider: rgba(255, 255, 255, 0.06);
+  --color-divider-strong: rgba(255, 255, 255, 0.12);
+
+  --color-stage-applied: #3b82f6;
+  --color-stage-screening: #f59e0b;
+  --color-stage-interview: #8b5cf6;
+  --color-stage-offer: #06b6d4;
+  --color-stage-hired: #22c55e;
+  --color-stage-rejected: #ef4444;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+  --animate-float-slow: float-slow 6s ease-in-out infinite;
+  --animate-float-delayed: float-slow 6s ease-in-out infinite 2s;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: rgba(249, 115, 22, 0.3);
 }

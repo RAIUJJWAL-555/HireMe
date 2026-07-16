@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
 }
 
 datasource db {
@@ -15,6 +16,14 @@ enum Role {
 enum JobStatus {
   open
   closed
+}
+
+enum Experience {
+  Fresher
+  ZeroToOne
+  OneToThree
+  ThreeToFive
+  FivePlus
 }
 
 enum Stage {
@@ -39,13 +48,14 @@ model User {
 }
 
 model Job {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  description String
-  department  String
-  status      JobStatus @default(open)
-  createdById String    @map("createdBy") @db.ObjectId
-  createdAt   DateTime  @default(now())
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  qualification String
+  experience    Experience
+  status        JobStatus  @default(open)
+  createdById   String     @map("createdBy") @db.ObjectId
+  createdAt     DateTime   @default(now())
 
   createdBy  User        @relation(fields: [createdById], references: [id])
   candidates Candidate[]
@@ -55,6 +65,8 @@ model Candidate {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   email        String
+  phone        String?
+  resumeUrl    String?
   jobId        String   @map("jobId") @db.ObjectId
   currentStage Stage    @default(Applied)
   notes        String   @default("")

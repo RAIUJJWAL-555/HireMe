@@ -1,327 +1,193 @@
-# HireTrack — Plan
+# HireTrack — Landing Page Plan
 
-## Overview
+## Context
 
-HireTrack is a trimmed Applicant Tracking System (ATS) built with Next.js 16, Express 5, MongoDB (Mongoose), and Tailwind CSS v4. It enables recruiters and admins to manage job postings, track candidates through a Kanban pipeline, and view hiring statistics on a dashboard.
+HireTrack is a lightweight ATS for small-to-mid recruiting teams. The landing page is the reviewer's first impression — it must instantly explain what the product does. Tone: professional, clean, confident. Inspired by Linear/Stripe/Vercel restraint. No lorem ipsum, no filler — every word earns its place.
+
+The landing page has been **componentized and largely built**. This plan documents the current structure, finalized copy, and remaining work.
 
 ---
 
-## Tech Stack
+## Tech Constraints
 
-| Layer | Technology |
+| Constraint | Detail |
 |---|---|
-| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS v4 |
-| Backend | Express 5, TypeScript |
-| Database | MongoDB + Mongoose ODM |
-| Auth | JWT (jsonwebtoken + bcrypt) |
-| Dev Tools | ts-node, nodemon |
+| Framework | Next.js 16 (App Router) |
+| Styling | Tailwind CSS v4 — utility classes only |
+| Fonts | Geist Sans + Geist Mono (configured in `layout.tsx`) |
+| Dark Mode | Full — driven by `ThemeContext` class toggle on `<html>` |
+| Auth | `useAuth()` — page renders different CTAs for logged-in vs. anonymous users |
+| Animation | Scroll-triggered fade-in via IntersectionObserver + `prefers-reduced-motion` respect |
 
 ---
 
-## User Roles
-
-- **Admin** — full access: create/edit/delete jobs, manage all candidates, view dashboard
-- **Recruiter** — create/edit jobs (own), manage candidates (own jobs), view dashboard
-
----
-
-## User Stories & Acceptance Criteria
-
-### US-01: User Registration
-
-**As a** new user  
-**I want to** register with name, email, and password  
-**So that** I can access the HireTrack system
-
-**Acceptance Criteria:**
-- [ ] `POST /api/auth/register` accepts `{ name, email, password }`
-- [ ] Password is hashed with bcrypt before storing
-- [ ] Email is validated for format and uniqueness
-- [ ] Default role is "recruiter"
-- [ ] Response returns user (without password) + JWT token
-- [ ] Frontend `/register` page has a form with validation
-- [ ] On success, redirect to `/dashboard`
-
-### US-02: User Login
-
-**As a** registered user  
-**I want to** login with email and password  
-**So that** I can access my dashboard
-
-**Acceptance Criteria:**
-- [ ] `POST /api/auth/login` accepts `{ email, password }`
-- [ ] Invalid credentials return 401 with error message
-- [ ] Response returns user + JWT token
-- [ ] Frontend `/login` page has a form with validation
-- [ ] On success, store token and redirect to `/dashboard`
-- [ ] JWT token expires after 7 days
-
-### US-03: Protected Routes (Auth Middleware)
-
-**As a** user  
-**I want** certain routes to require authentication  
-**So that** unauthorized users cannot access the system
-
-**Acceptance Criteria:**
-- [ ] `auth` middleware verifies JWT from `Authorization: Bearer <token>` header
-- [ ] Invalid/expired token returns 401
-- [ ] `req.user` is populated with user data after verification
-- [ ] Frontend redirects to `/login` if no valid token found
-- [ ] Frontend shows a loading state while checking auth status
-
-### US-04: Role-Based Access Control
-
-**As an** admin  
-**I want** exclusive access to certain operations  
-**So that** only admins can delete jobs and manage all records
-
-**Acceptance Criteria:**
-- [ ] `adminOnly` middleware checks `req.user.role === "admin"`
-- [ ] Non-admin gets 403 Forbidden
-- [ ] Admin can delete any job; recruiter sees no delete button
-- [ ] Admin can view/edit all candidates across all jobs
-- [ ] Frontend conditionally renders admin-only UI elements
-
-### US-05: Job CRUD
-
-**As a** recruiter/admin  
-**I want** to create, read, update, and close job postings  
-**So that** I can manage open positions
-
-**Acceptance Criteria:**
-- [ ] `GET /api/jobs` — list all jobs (with pagination), supports `?status=open` filter
-- [ ] `POST /api/jobs` — create job with `{ title, description, department }`
-- [ ] `GET /api/jobs/:id` — get single job with candidate count
-- [ ] `PUT /api/jobs/:id` — update job fields (only owner or admin)
-- [ ] `DELETE /api/jobs/:id` — delete job (admin only)
-- [ ] Job status toggles between "open" and "closed"
-- [ ] Frontend `/dashboard/jobs` — table listing with title, department, status, candidate count, actions
-- [ ] Frontend `/dashboard/jobs/new` and `/dashboard/jobs/[id]/edit` — forms with validation
-- [ ] Closing a job prevents new candidate additions
-
-### US-06: Candidate Pipeline — Kanban Board
-
-**As a** recruiter/admin  
-**I want** to see candidates organized by stage in a Kanban board  
-**So that** I can visually track the hiring pipeline
-
-**Acceptance Criteria:**
-- [ ] `GET /api/candidates` — list candidates with `?stage=` filter, supports pagination
-- [ ] Candidates grouped by stage columns: Applied | Screening | Interview | Offer | Hired | Rejected
-- [ ] Each column shows candidate cards with name, email, and applied date
-- [ ] `PATCH /api/candidates/:id/stage` — move candidate to next/any stage
-- [ ] Stage transition logs to `StageHistory` collection
-- [ ] Frontend Kanban shows draggable/clickable stage movement
-- [ ] Invalid transitions show error (e.g., Hired → Applied)
-- [ ] Empty stage columns show "No candidates" state
-
-### US-07: Candidate Profile
-
-**As a** recruiter/admin  
-**I want** to view a candidate's full profile with notes  
-**So that** I can make informed hiring decisions
-
-**Acceptance Criteria:**
-- [ ] `GET /api/candidates/:id` — returns full candidate details + stage history
-- [ ] Profile shows: name, email, current stage, applied job, timeline
-- [ ] `PUT /api/candidates/:id` — update candidate info including notes field
-- [ ] Notes field is a textarea (simplified scorecard)
-- [ ] Stage history is displayed as a chronological timeline
-- [ ] Frontend `/dashboard/candidates/[id]` page with profile + notes editor + history
-
-### US-08: Search & Filter Candidates
-
-**As a** recruiter/admin  
-**I want** to search and filter candidates  
-**So that** I can quickly find relevant candidates
-
-**Acceptance Criteria:**
-- [ ] `GET /api/candidates?search=keyword` — searches name and email (case-insensitive)
-- [ ] `GET /api/candidates?stage=Interview` — filter by current stage
-- [ ] `GET /api/candidates?jobId=xxx` — filter by job
-- [ ] `GET /api/candidates?page=1&limit=10` — pagination with total count
-- [ ] All filter parameters can be combined
-- [ ] Frontend search bar with debounced input
-- [ ] Frontend filter dropdowns for stage and job
-- [ ] Pagination controls at the bottom
-
-### US-09: Dashboard Stats
-
-**As a** user  
-**I want** to see hiring statistics on the dashboard  
-**So that** I can track overall progress at a glance
-
-**Acceptance Criteria:**
-- [ ] `GET /api/dashboard` returns:
-  - Total number of open jobs
-  - Total candidates
-  - Candidate count per stage
-  - Recent stage changes (last 5)
-- [ ] Dashboard page (`/dashboard`) displays:
-  - Stat cards: Open Jobs, Total Candidates, Hired, Rejected
-  - Stage distribution (bar or pie visual)
-  - Recent activity feed
-- [ ] Stats update in real-time when data changes (on page load)
-
-### US-10: Stage History (Audit Log)
-
-**As an** admin  
-**I want** to see a history of stage transitions for each candidate  
-**So that** I can audit the hiring process
-
-**Acceptance Criteria:**
-- [ ] `StageHistory` document created on every stage change: `{ candidateId, fromStage, toStage, changedBy, changedAt }`
-- [ ] `GET /api/candidates/:id/history` — returns all stage changes for a candidate
-- [ ] History is shown in candidate profile as a timeline
-- [ ] Each entry shows: from → to, who changed it, and timestamp
-
----
-
-## Database Schema
+## 1. Section Structure
 
 ```
-User {
-  _id: ObjectId
-  name: String (required)
-  email: String (required, unique, lowercase)
-  password: String (required, hashed)
-  role: Enum ["admin", "recruiter"] (default: "recruiter")
-  createdAt: Date
-}
-
-Job {
-  _id: ObjectId
-  title: String (required)
-  description: String (required)
-  department: String (required)
-  status: Enum ["open", "closed"] (default: "open")
-  createdBy: ObjectId (ref: User)
-  createdAt: Date
-}
-
-Candidate {
-  _id: ObjectId
-  name: String (required)
-  email: String (required)
-  jobId: ObjectId (ref: Job, required)
-  currentStage: Enum ["Applied", "Screening", "Interview", "Offer", "Hired", "Rejected"] (default: "Applied")
-  notes: String
-  createdAt: Date
-  updatedAt: Date
-}
-
-StageHistory {
-  _id: ObjectId
-  candidateId: ObjectId (ref: Candidate)
-  fromStage: String
-  toStage: String
-  changedBy: ObjectId (ref: User)
-  changedAt: Date
-}
+┌─────────────────────────────────────────────────┐
+│  Header (sticky, inline in page.tsx)            │
+│  Logo · Nav links · ThemeToggle · Auth CTAs      │
+├─────────────────────────────────────────────────┤
+│  Hero (Hero.tsx)                                │
+│  Pill badge · H1 · Subtitle · CTA buttons       │
+│  Static pipeline diagram (5 stages + avatars)   │
+├─────────────────────────────────────────────────┤
+│  Features (Features.tsx)                        │
+│  Section heading · 4-card grid                  │
+│  Pipeline · Jobs · Search · Role-Based Access    │
+├─────────────────────────────────────────────────┤
+│  How It Works (HowItWorks.tsx)                  │
+│  Section heading · 3-step flow with icons       │
+│  Post → Move → Track                            │
+├─────────────────────────────────────────────────┤
+│  CTA Banner (inline in page.tsx)                │
+│  Gradient card · final conversion push           │
+├─────────────────────────────────────────────────┤
+│  Footer (Footer.tsx)                            │
+│  Branding · Tech badges · GitHub link · Copyright│
+└─────────────────────────────────────────────────┘
 ```
 
 ---
 
-## API Routes
+## 2. Finalized Copy
 
-### Auth
-| Method | Route | Auth | Role |
-|---|---|---|---|
-| POST | `/api/auth/register` | — | — |
-| POST | `/api/auth/login` | — | — |
-| GET | `/api/auth/me` | auth | any |
+### Header
+- **Logo:** HireTrack (icon + text)
+- **Nav links:** Features · How It Works · GitHub
+- **CTAs (logged out):** Sign In (ghost) · Try Demo (indigo filled)
+- **CTA (logged in):** Go to Dashboard (filled)
 
-### Jobs
-| Method | Route | Auth | Role |
-|---|---|---|---|
-| GET | `/api/jobs` | auth | any |
-| POST | `/api/jobs` | auth | any |
-| GET | `/api/jobs/:id` | auth | any |
-| PUT | `/api/jobs/:id` | auth | owner/admin |
-| DELETE | `/api/jobs/:id` | adminOnly | admin |
+### Hero
+- **Pill:** `● Recruiter Sandbox Ready`
+- **H1:** Track every candidate, from applied to hired — in **one clean pipeline**
+- **Subtitle:** A lightweight ATS for small-to-mid recruiting teams — manage jobs, move candidates through stages, and track performance in one place.
+- **Primary CTA:** Try Demo → `/login`
+- **Secondary CTA:** View on GitHub (with octocat icon)
+- **Logged-in variant:** CTA → "Enter Dashboard", no GitHub button
+- **Pipeline diagram:** 5 stages (Applied → Screening → Interview → Offer → Hired) with mock avatar circles
 
-### Candidates
-| Method | Route | Auth | Role |
-|---|---|---|---|
-| GET | `/api/candidates` | auth | any |
-| POST | `/api/candidates` | auth | any |
-| GET | `/api/candidates/:id` | auth | any |
-| PUT | `/api/candidates/:id` | auth | any |
-| PATCH | `/api/candidates/:id/stage` | auth | any |
-| GET | `/api/candidates/:id/history` | auth | any |
+### Features
+- **Section heading:** Recruiting software designed for focus
+- **Section subtitle:** Stop juggling spreadsheets. HireTrack gives recruiters a centralized database to source, filter, and advance high-quality talent.
 
-### Dashboard
-| Method | Route | Auth | Role |
+| # | Title | Description | Icon |
 |---|---|---|---|
-| GET | `/api/dashboard` | auth | any |
+| 1 | Candidate Pipeline | Kanban-style stage tracking to move candidates from applied to hired. | LayoutGrid (rows) |
+| 2 | Job Postings | Create, manage, and close job openings organized by department. | Briefcase |
+| 3 | Search & Filter | Fast candidate lookup by name, email, job, stage, or keywords. | Search |
+| 4 | Role-Based Access | Admin and Recruiter permissions with full stage-history audit logs. | Shield |
+
+### How It Works
+- **Section heading:** Three steps to a better hiring experience
+- **Section subtitle:** Get up and running with HireTrack in under five minutes.
+
+| Step | Title | Description | Icon |
+|---|---|---|---|
+| 1 | Post a Job | Define the role, set requirements, and publish openings to start sourcing candidates. | FilePlus |
+| 2 | Move Candidates Through Stages | Advance applicants through screening, interview, and offer stages on a visual Kanban board. | Columns3 |
+| 3 | Track Hiring Metrics | Monitor applicant volumes, stage conversions, and recent activity from a single dashboard. | BarChart3 |
+
+### CTA Banner
+- **Heading:** Ready to optimize your recruiting flow?
+- **Body:** Log into our sandbox environment with fully pre-populated jobs, candidates, and histories. No signup required.
+- **Button (logged out):** Try Demo Now → `/login?email=recruiter@hiretrack.com&password=password123`
+- **Button (logged in):** Go to Dashboard → `/dashboard`
+
+### Footer
+- **Left:** HireTrack · Built for Digital Heroes Full Stack Developer Trial.
+- **Center:** Tech badges: Next.js · TypeScript · Prisma · Tailwind CSS
+- **Right:** GitHub Repository (link)
+- **Bottom:** © 2026 HireTrack. All rights reserved.
 
 ---
 
-## Frontend Routes
+## 3. Component Breakdown
 
-| Path | Page | Auth |
+All landing components in `frontend/app/components/landing/`.
+
+```
+app/
+├── page.tsx                          # Composes sections + inline header/CTA
+├── components/
+│   └── landing/
+│       ├── Hero.tsx                  # H1, subtitle, CTAs, pipeline diagram
+│       ├── Features.tsx              # 4-card feature grid with scroll animation
+│       ├── HowItWorks.tsx            # 3-step flow with icons + scroll animation
+│       └── Footer.tsx                # Static footer
+```
+
+### Component Responsibilities
+
+| Component | File | Lines | State | Props | Notes |
+|---|---|---|---|---|---|
+| `page.tsx` | `page.tsx` | 143 | — | — | `"use client"`. Inline header (sticky, backdrop-blur) + CTA banner. Uses `useAuth()` for CTA switching. Imports all 4 landing components. |
+| `Hero` | `Hero.tsx` | 157 | `mounted` | — | Self-contained animation gate. Renders pill badge, H1 with gradient text, subtitle, dual CTAs, static pipeline diagram. |
+| `Features` | `Features.tsx` | 175 | `visible`, `reducedMotion` | — | IntersectionObserver-driven scroll animation. 4 cards in responsive grid. Inline SVG icons. |
+| `HowItWorks` | `HowItWorks.tsx` | 169 | `visible`, `reducedMotion` | — | Same scroll animation pattern. 3 steps with circular icon badges. |
+| `Footer` | `Footer.tsx` | 54 | — | — | Pure server component (no `"use client"`). Static content. |
+
+### Animation Pattern (shared by Features + HowItWorks)
+
+1. `usePrefersReducedMotion()` hook checks `matchMedia("(prefers-reduced-motion: reduce)")`
+2. IntersectionObserver with `threshold: 0.15` triggers visibility
+3. Cards use CSS transitions: `opacity-0 translate-y-4` → `opacity-100 translate-y-0`
+4. Staggered delay: `150 + i * 30ms` per card
+5. If reduced motion → immediately visible, no animation
+
+---
+
+## 4. Design Tokens
+
+| Token | Value | Usage |
 |---|---|---|
-| `/login` | Login form | No |
-| `/register` | Registration form | No |
-| `/dashboard` | Stats dashboard | Yes |
-| `/dashboard/jobs` | Jobs list | Yes |
-| `/dashboard/jobs/new` | Create job | Yes |
-| `/dashboard/jobs/[id]/edit` | Edit job | Yes |
-| `/dashboard/candidates` | Kanban board | Yes |
-| `/dashboard/candidates/[id]` | Candidate profile | Yes |
+| Accent | Indigo (`bg-indigo-600`, `from-indigo-600 to-violet-500`) | CTAs, icons, gradient text |
+| Backgrounds | `bg-zinc-50`, `bg-zinc-100/40`, `bg-white`, `dark:bg-zinc-950` | Page, sections, cards |
+| Text | `text-zinc-900`, `text-zinc-600`, `text-zinc-500` | Primary, secondary, muted |
+| Borders | `border-zinc-200`, `dark:border-zinc-800` | Cards, dividers |
+| Radius | `rounded-lg` (8px), `rounded-xl` (12px) | Buttons, cards |
+| Font | Geist Sans, `font-sans antialiased` | Body |
+| Shadows | `shadow-sm`, `dark:shadow-none` | Cards |
 
 ---
 
-## Stage Transition Rules
+## 5. Responsive Behavior
 
-```
-Applied → Screening ✓
-Applied → Rejected  ✓
-Screening → Interview ✓
-Screening → Rejected ✓
-Interview → Offer ✓
-Interview → Rejected ✓
-Offer → Hired ✓
-Offer → Rejected ✓
-Hired → * ✗ (terminal)
-Rejected → * ✗ (terminal)
-```
+| Breakpoint | Header | Hero | Features | HowIt Works |
+|---|---|---|---|---|
+| Mobile (< 640px) | Hamburger-less, logo + CTAs only | Stack, text-left | 1 column | 1 column (stacked) |
+| Tablet (640–1024px) | Nav links hidden | Center, larger text | 2 columns | 2 columns |
+| Desktop (> 1024px) | Full nav visible | Center, largest text | 4 columns | 3 columns |
 
 ---
 
-## Day-wise Breakdown
+## 6. Remaining Work / Gaps
 
-### Day 1 — Backend Foundation
-- MongoDB connection config
-- All 4 Mongoose models
-- Auth system (register, login, me)
-- JWT middleware + adminOnly middleware
+| # | Item | Status | Notes |
+|---|---|---|---|
+| 1 | `Header.tsx` as standalone component | Not extracted | Header is inline in `page.tsx` (~80 lines). Could be extracted but low priority — it's tightly coupled to `useAuth()`. |
+| 2 | `CtaBanner.tsx` as standalone component | Not extracted | CTA banner is inline in `page.tsx` (~30 lines). Same reasoning as Header. |
+| 3 | `KanbanPreview.tsx` interactive board | Not built | Original plan called for an interactive Kanban with advance buttons. Current Hero has a simpler static pipeline diagram. The original monolith had a full interactive board — this was intentionally simplified during extraction. |
+| 4 | GitHub URL placeholder | Still `https://github.com` | Should point to actual repo when available. |
 
-### Day 2 — Backend APIs
-- Job CRUD routes + controller
-- Candidate CRUD + stage transitions + history
-- Search/filter/pagination on candidates
-- Dashboard stats endpoint
-- Global error handler
+---
 
-### Day 3 — Frontend Foundation
-- Auth pages (login, register)
-- Auth context + protected routes
-- Dashboard layout (sidebar + topbar)
-- Jobs list, create, edit pages
+## 7. Open Questions
 
-### Day 4 — Frontend Core Features
-- Kanban board with stage columns
-- Candidate profile with notes + history
-- Search/filter/pagination UI
-- Dashboard stats page
-- Loading/empty/error states
+| # | Question | Default if no answer |
+|---|---|---|
+| 1 | Should the Header and CTA Banner be extracted to separate components? | Keep inline — they're small, auth-dependent, and not reused elsewhere. |
+| 2 | Should the Hero pipeline diagram be interactive (advance buttons) or stay static? | Keep static — it's a visual teaser, not the product itself. Interactive demos belong in the dashboard. |
+| 3 | Should the GitHub link point to the actual repo? | Keep placeholder until repo is public. |
+| 4 | Any additional sections (testimonials, pricing, social proof)? | No — keep minimal per the restraint brief. |
 
-### Day 5 — Polish & Ship
-- Form validations everywhere
-- Toast notifications for errors
-- Stage transition guards
-- Admin vs Recruiter UX
-- Backend seed script
-- README with setup instructions
-- Final walkthrough
+---
+
+## 8. Assumptions
+
+1. **No new dependencies.** Everything uses existing Tailwind + React + Next.js primitives + inline SVGs.
+2. **No visual design changes needed.** The current implementation matches the design system.
+3. **The pipeline diagram in Hero is decorative** (`aria-hidden="true"`), not interactive.
+4. **Mobile responsiveness** is handled by existing Tailwind responsive classes.
+5. **The "Digital Heroes Full Stack Developer Trial" attribution** in the footer is a project requirement and stays as-is.
+6. **Dark mode** works automatically — all components handle `.dark` variants.

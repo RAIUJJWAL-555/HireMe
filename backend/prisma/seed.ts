@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Stage } from "@prisma/client";
+import { PrismaClient, Role, Stage, Experience } from "@prisma/client";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
@@ -40,8 +40,9 @@ async function main() {
   const feJob = await prisma.job.create({
     data: {
       title: "Frontend Developer",
-      description: "Build and maintain React/Next.js applications. 3+ years experience with TypeScript required.",
-      department: "Engineering",
+      description: "Build and maintain React/Next.js applications. Experience with TypeScript required.",
+      qualification: "B.Tech / B.Sc Computer Science",
+      experience: Experience.ThreeToFive,
       status: "open",
       createdById: recruiter.id,
     },
@@ -51,7 +52,8 @@ async function main() {
     data: {
       title: "Backend Developer",
       description: "Design and implement RESTful APIs using Node.js and Express. Experience with MongoDB preferred.",
-      department: "Engineering",
+      qualification: "B.Tech / MCA",
+      experience: Experience.OneToThree,
       status: "open",
       createdById: recruiter.id,
     },
@@ -61,7 +63,8 @@ async function main() {
     data: {
       title: "Product Manager",
       description: "Own product roadmap, gather requirements, and work with engineering teams to deliver features.",
-      department: "Product",
+      qualification: "MBA / B.Tech",
+      experience: Experience.FivePlus,
       status: "open",
       createdById: admin.id,
     },

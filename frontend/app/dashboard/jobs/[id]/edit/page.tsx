@@ -4,42 +4,71 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { api } from "../../../../lib/api";
 import JobForm from "../../../components/JobForm";
+import { FormSkeleton } from "../../../../components/Skeleton";
+import ErrorState from "../../../../components/ErrorState";
 
 export default function EditJobPage() {
   const params = useParams();
   const id = params.id as string;
   const [job, setJob] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchJob = () => {
+    setLoading(true);
+    setError(null);
     api.get<{ job: any }>(`/jobs/${id}`)
       .then((data) => setJob(data.job))
-      .catch(console.error)
+      .catch((err) => setError(err.message || "Failed to load job"))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchJob();
   }, [id]);
 
   if (loading) {
-    return <div style={{ padding: "40px", color: "#a1a1aa" }}>Loading...</div>;
+    return (
+      <div className="mx-auto w-full max-w-4xl px-6 py-8 md:px-8">
+        <FormSkeleton />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mx-auto w-full max-w-4xl px-6 py-8 md:px-8">
+        <ErrorState message={error} onRetry={fetchJob} />
+      </div>
+    );
   }
 
   if (!job) {
-    return <div style={{ padding: "40px", color: "#dc2626" }}>Job not found</div>;
+    return (
+      <div className="mx-auto w-full max-w-4xl px-6 py-8 md:px-8">
+        <ErrorState
+          title="Job not found"
+          message="The job you're looking for doesn't exist or has been removed."
+        />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1 style={{ fontSize: "20px", fontWeight: 600, color: "#18181b", marginBottom: "24px" }}>
-        Edit Job
-      </h1>
-      <JobForm
-        jobId={id}
-        initialData={{
-          title: job.title,
-          description: job.description,
-          department: job.department,
-          status: job.status,
-        }}
-      />
-    </div>
+    <div className="mx-auto w-full max-w-4xl px-6 py-8 md:px-8">
+        <h1 className="text-xl font-semibold text-white mb-6">Edit Job</h1>
+        <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/50 p-6 md:p-8">
+          <JobForm
+            jobId={id}
+            initialData={{
+              title: job.title,
+              description: job.description,
+              qualification: job.qualification,
+              experience: job.experience,
+              status: job.status,
+            }}
+          />
+        </div>
+      </div>
   );
 }

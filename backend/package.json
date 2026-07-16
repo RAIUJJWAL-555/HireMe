@@ -24,6 +24,8 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.4",
+    "multer": "^2.2.0",
+    "papaparse": "^5.5.4",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -32,7 +34,9 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
     "@types/node": "^26.1.1",
+    "@types/papaparse": "^5.5.2",
     "nodemon": "^3.1.14",
     "prisma": "^6.19.3",
     "ts-node": "^10.9.2",

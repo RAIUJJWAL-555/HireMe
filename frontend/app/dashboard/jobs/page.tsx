@@ -5,11 +5,25 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { api } from "../../lib/api";
 import { useAuth } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
+import { colors } from "../../lib/design-tokens";
+import { TableRowSkeleton } from "../../components/Skeleton";
+import { JobsEmptyState } from "../../components/EmptyState";
+import ErrorState from "../../components/ErrorState";
+
+const EXPERIENCE_LABELS: Record<string, string> = {
+  Fresher: "Fresher",
+  ZeroToOne: "0-1 Years",
+  OneToThree: "1-3 Years",
+  ThreeToFive: "3-5 Years",
+  FivePlus: "5+ Years",
+};
 
 interface Job {
   id: string;
   title: string;
-  department: string;
+  qualification: string;
+  experience: string;
   status: "open" | "closed";
   createdAt: string;
   _count: { candidates: number };
@@ -18,22 +32,27 @@ interface Job {
 export default function JobsPage() {
   const { user } = useAuth();
   const router = useRouter();
+  const { toast } = useToast();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState("");
 
+  const fetchJobs = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const params = filter ? `?status=${filter}` : "";
+      const data = await api.get<{ jobs: Job[] }>(`/jobs${params}`);
+      setJobs(data.jobs);
+    } catch (err: any) {
+      setError(err.message || "Failed to load jobs");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const params = filter ? `?status=${filter}` : "";
-        const data = await api.get<{ jobs: Job[] }>(`/jobs${params}`);
-        setJobs(data.jobs);
-      } catch (err: any) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchJobs();
   }, [filter]);
 
@@ -42,114 +61,158 @@ export default function JobsPage() {
     try {
       await api.delete(`/jobs/${id}`);
       setJobs((prev) => prev.filter((j) => j.id !== id));
+      toast("success", "Job deleted");
     } catch (err: any) {
-      alert(err.message);
+      toast("error", err.message || "Failed to delete job");
     }
   };
 
-  // Inline styles for status badges
-  const statusBadge = (status: string) => ({
-    display: "inline-block",
-    padding: "2px 8px",
-    borderRadius: "9999px",
-    fontSize: "12px",
-    fontWeight: 500,
-    background: status === "open" ? "#dcfce7" : "#f3f4f6",
-    color: status === "open" ? "#166534" : "#6b7280",
-  });
-
   return (
-    <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-        <h1 style={{ fontSize: "20px", fontWeight: 600, color: "#18181b" }}>Jobs</h1>
-        <Link
-          href="/dashboard/jobs/new"
-          style={{
-            padding: "8px 16px",
-            background: "#18181b",
-            color: "white",
-            borderRadius: "8px",
-            fontSize: "14px",
-            fontWeight: 500,
-            textDecoration: "none",
-          }}
-        >
-          + New Job
-        </Link>
-      </div>
-
-      <div style={{ marginBottom: "16px" }}>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          style={{
-            padding: "8px 12px",
-            borderRadius: "8px",
-            border: "1px solid #d4d4d8",
-            fontSize: "14px",
-            background: "white",
-          }}
-        >
-          <option value="">All statuses</option>
-          <option value="open">Open</option>
-          <option value="closed">Closed</option>
-        </select>
-      </div>
-
-      {loading ? (
-        <div style={{ padding: "40px", textAlign: "center", color: "#a1a1aa" }}>Loading...</div>
-      ) : jobs.length === 0 ? (
-        <div style={{ padding: "40px", textAlign: "center", color: "#a1a1aa" }}>
-          No jobs found.{" "}
-          <Link href="/dashboard/jobs/new" style={{ color: "#18181b" }}>
-            Create one
+    <div className="mx-auto max-w-7xl px-6 py-8 md:px-8 min-h-screen flex flex-col justify-center">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-xl font-semibold text-white m-0">Jobs</h1>
+          <Link
+            href="/dashboard/jobs/new"
+            className="rounded-full bg-orange-500 px-5 py-2 text-sm font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
+          >
+            + New Job
           </Link>
         </div>
-      ) : (
-        <div style={{ borderRadius: "12px", border: "1px solid #e4e4e7", overflow: "hidden" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ background: "#fafafa", textAlign: "left" }}>
-                <th style={{ padding: "12px 16px", fontSize: "12px", fontWeight: 600, color: "#71717a", textTransform: "uppercase" }}>Title</th>
-                <th style={{ padding: "12px 16px", fontSize: "12px", fontWeight: 600, color: "#71717a", textTransform: "uppercase" }}>Department</th>
-                <th style={{ padding: "12px 16px", fontSize: "12px", fontWeight: 600, color: "#71717a", textTransform: "uppercase" }}>Status</th>
-                <th style={{ padding: "12px 16px", fontSize: "12px", fontWeight: 600, color: "#71717a", textTransform: "uppercase" }}>Candidates</th>
-                <th style={{ padding: "12px 16px", fontSize: "12px", fontWeight: 600, color: "#71717a", textTransform: "uppercase" }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+
+        <div className="mb-6">
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="rounded-full border border-zinc-700/50 bg-zinc-800/80 px-4 py-2 text-sm text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+          >
+            <option value="">All statuses</option>
+            <option value="open">Open</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+
+        {loading ? (
+          <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/50 overflow-x-auto">
+            <table className="w-full min-w-[600px] border-collapse">
+              <thead>
+                <tr className="bg-zinc-900/50 text-left">
+                  {["Title", "Qualification", "Experience", "Status", "Candidates", "Actions"].map((h) => (
+                    <th key={h} className={`px-4 py-4 text-xs font-semibold uppercase text-zinc-500 ${h === "Candidates" ? "text-right" : ""}`}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <TableRowSkeleton key={i} columns={6} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : error ? (
+          <ErrorState message={error} onRetry={fetchJobs} />
+        ) : jobs.length === 0 ? (
+          <JobsEmptyState />
+        ) : (
+          <>
+            {/* Mobile: stacked card view */}
+            <div className="flex flex-col gap-3 md:hidden">
               {jobs.map((job) => (
-                <tr key={job.id} style={{ borderTop: "1px solid #e4e4e7" }}>
-                  <td style={{ padding: "12px 16px", fontSize: "14px", fontWeight: 500, color: "#18181b" }}>{job.title}</td>
-                  <td style={{ padding: "12px 16px", fontSize: "14px", color: "#52525b" }}>{job.department}</td>
-                  <td style={{ padding: "12px 16px" }}>
-                    <span style={statusBadge(job.status)}>{job.status}</span>
-                  </td>
-                  <td style={{ padding: "12px 16px", fontSize: "14px", color: "#52525b" }}>{job._count.candidates}</td>
-                  <td style={{ padding: "12px 16px" }}>
-                    <div style={{ display: "flex", gap: "8px" }}>
+                <div key={job.id} className="rounded-2xl border border-zinc-800/60 bg-zinc-900/50 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-sm font-medium text-white truncate">{job.title}</h3>
+                      <p className="text-xs text-zinc-500 mt-0.5">{job.qualification}</p>
+                      <p className="text-xs text-zinc-500 mt-0.5">{EXPERIENCE_LABELS[job.experience] || job.experience}</p>
+                    </div>
+                    <span
+                      className="shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium"
+                      style={{
+                        backgroundColor: job.status === "open" ? colors.successBg : "rgba(255,255,255,0.06)",
+                        color: job.status === "open" ? colors.successMuted : colors.textMuted,
+                      }}
+                    >
+                      {job.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-800/60">
+                    <span className="text-xs text-zinc-500">{job._count.candidates} candidates</span>
+                    <div className="flex gap-3">
                       <button
                         onClick={() => router.push(`/dashboard/jobs/${job.id}/edit`)}
-                        style={{ fontSize: "13px", color: "#18181b", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+                        className="text-xs text-zinc-300 hover:text-orange-400 underline transition-colors"
                       >
                         Edit
                       </button>
                       {user?.role === "admin" && (
                         <button
                           onClick={() => handleDelete(job.id)}
-                          style={{ fontSize: "13px", color: "#dc2626", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}
+                          className="text-xs text-red-400 hover:text-red-300 underline transition-colors"
                         >
                           Delete
                         </button>
                       )}
                     </div>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+            </div>
+
+            {/* Desktop: table view */}
+            <div className="hidden md:block rounded-2xl border border-zinc-800/60 bg-zinc-900/50 overflow-x-auto">
+              <table className="w-full min-w-[700px] border-collapse">
+                <thead>
+                  <tr className="text-left">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Title</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Qualification</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Experience</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Status</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500 text-right">Candidates</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jobs.map((job) => (
+                    <tr key={job.id} className="border-t border-zinc-800/60">
+                      <td className="px-4 py-4 text-sm font-medium text-white align-middle">{job.title}</td>
+                      <td className="px-4 py-4 text-sm text-zinc-400 align-middle">{job.qualification}</td>
+                      <td className="px-4 py-4 text-sm text-zinc-400 align-middle">{EXPERIENCE_LABELS[job.experience] || job.experience}</td>
+                      <td className="px-4 py-4 align-middle">
+                        <span
+                          className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium"
+                          style={{
+                            backgroundColor: job.status === "open" ? colors.successBg : "rgba(255,255,255,0.06)",
+                            color: job.status === "open" ? colors.successMuted : colors.textMuted,
+                          }}
+                        >
+                          {job.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4 text-sm text-zinc-400 align-middle text-right">{job._count.candidates}</td>
+                      <td className="px-4 py-4 align-middle text-right">
+                        <div className="flex items-center justify-end gap-3">
+                          <button
+                            onClick={() => router.push(`/dashboard/jobs/${job.id}/edit`)}
+                            className="text-sm text-zinc-300 hover:text-orange-400 underline transition-colors"
+                          >
+                            Edit
+                          </button>
+                          {user?.role === "admin" && (
+                            <button
+                              onClick={() => handleDelete(job.id)}
+                              className="text-sm text-red-400 hover:text-red-300 underline transition-colors"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </div>
   );
 }

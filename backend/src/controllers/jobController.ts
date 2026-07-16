@@ -40,13 +40,14 @@ export async function getJob(req: AuthRequest, res: Response, next: NextFunction
 
 export async function createJob(req: AuthRequest, res: Response, next: NextFunction) {
   try {
-    const { title, description, department } = req.body;
+    const { title, description, qualification, experience } = req.body;
 
     const job = await prisma.job.create({
       data: {
         title,
         description,
-        department,
+        qualification,
+        experience,
         createdById: req.user!.id,
       },
     });

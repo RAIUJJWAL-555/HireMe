@@ -70,7 +70,7 @@ export async function getCandidate(req: AuthRequest, res: Response, next: NextFu
     const candidate = await prisma.candidate.findUnique({
       where: { id },
       include: {
-        job: { select: { id: true, title: true, department: true } },
+        job: { select: { id: true, title: true } },
         stageHistory: {
           orderBy: { changedAt: "desc" },
           include: { changedBy: { select: { id: true, name: true } } },
@@ -91,7 +91,7 @@ export async function getCandidate(req: AuthRequest, res: Response, next: NextFu
 
 export async function createCandidate(req: AuthRequest, res: Response, next: NextFunction) {
   try {
-    const { name, email, jobId, notes } = req.body;
+    const { name, email, jobId, notes, phone, resumeUrl } = req.body;
 
     const job = await prisma.job.findUnique({ where: { id: jobId } });
     if (!job) {
@@ -104,7 +104,14 @@ export async function createCandidate(req: AuthRequest, res: Response, next: Nex
     }
 
     const candidate = await prisma.candidate.create({
-      data: { name, email, jobId, notes: notes || "" },
+      data: {
+        name,
+        email,
+        jobId,
+        notes: notes || "",
+        phone: phone || null,
+        resumeUrl: resumeUrl || null,
+      },
       include: { job: { select: { id: true, title: true } } },
     });
 
