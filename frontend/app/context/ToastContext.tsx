@@ -53,9 +53,9 @@ export function useToast() {
 
 function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }) {
   const styles: Record<ToastType, string> = {
-    success: "bg-emerald-600 text-white",
-    error: "bg-red-600 text-white",
-    info: "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900",
+    success: "bg-emerald-600 text-zinc-900 dark:text-white",
+    error: "bg-red-600 text-zinc-900 dark:text-white",
+    info: "bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-white",
   };
 
   const icons: Record<ToastType, ReactNode> = {

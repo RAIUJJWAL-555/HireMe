@@ -17,11 +17,11 @@ export default function EmptyState({ icon, title, description, action }: EmptySt
   return (
     <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
       {icon && (
-        <div className="mb-4 text-zinc-600">
+        <div className="mb-4 text-zinc-400 dark:text-zinc-600">
           {icon}
         </div>
       )}
-      <h3 className="text-[15px] font-semibold text-white m-0">
+      <h3 className="text-[15px] font-semibold text-zinc-900 dark:text-white m-0">
         {title}
       </h3>
       {description && (
@@ -34,14 +34,14 @@ export default function EmptyState({ icon, title, description, action }: EmptySt
           {action.href ? (
             <Link
               href={action.href}
-              className="inline-block rounded-full bg-orange-500 px-5 py-2 text-[13px] font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
+              className="inline-block rounded-full bg-orange-500 px-5 py-2 text-[13px] font-medium text-zinc-900 dark:text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
             >
               {action.label}
             </Link>
           ) : (
             <button
               onClick={action.onClick}
-              className="rounded-full bg-orange-500 px-5 py-2 text-[13px] font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow border-none cursor-pointer"
+              className="rounded-full bg-orange-500 px-5 py-2 text-[13px] font-medium text-zinc-900 dark:text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow border-none cursor-pointer"
             >
               {action.label}
             </button>
@@ -98,10 +98,10 @@ export function KanbanEmptyState() {
 export function HistoryEmptyState() {
   return (
     <div className="py-6 text-center">
-      <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-zinc-600 mx-auto mb-2">
+      <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="text-zinc-400 dark:text-zinc-600 mx-auto mb-2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-      <p className="text-[13px] text-zinc-600 m-0">No stage changes yet.</p>
+      <p className="text-[13px] text-zinc-400 dark:text-zinc-600 m-0">No stage changes yet.</p>
     </div>
   );
 }

@@ -36,11 +36,11 @@ export default function StatsRing({
     return (
       <div className="flex flex-col items-center gap-6 animate-pulse">
         {/* Heading */}
-        <h2 className="text-lg font-bold text-white">Statistics</h2>
+        <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Statistics</h2>
 
         {/* Ring Placeholder */}
         <div
-          className="rounded-full bg-zinc-800/40 border-4 border-zinc-700/30"
+          className="rounded-full bg-zinc-100 dark:bg-zinc-800/40 border-4 border-zinc-200 dark:border-zinc-700/30"
           style={{ width: size, height: size }}
         />
       </div>
@@ -50,7 +50,7 @@ export default function StatsRing({
   return (
     <div className="flex flex-col items-center gap-6">
       {/* Heading */}
-      <h2 className="text-lg font-bold text-white">Statistics</h2>
+      <h2 className="text-lg font-bold text-zinc-900 dark:text-white">Statistics</h2>
 
       {/* Ring */}
       <div className="relative" style={{ width: size, height: size }}>
@@ -97,7 +97,7 @@ export default function StatsRing({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="#27272a"
+            stroke="#e4e4e7"
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             filter={`url(#organic-${id})`}
@@ -125,8 +125,8 @@ export default function StatsRing({
 
         {/* Center content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xs font-medium text-zinc-400">{label}</span>
-          <span className="mt-1 text-3xl font-bold text-white">
+          <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{label}</span>
+          <span className="mt-1 text-3xl font-bold text-zinc-900 dark:text-white">
             {value}
             <span className="text-lg">{unit}</span>
           </span>

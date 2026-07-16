@@ -4,7 +4,11 @@ import { useState, useRef, useCallback } from "react";
 import { UploadCloud, FileSpreadsheet, X, ChevronDown, ChevronUp, Check, AlertTriangle, SkipForward } from "lucide-react";
 import { useToast } from "../../context/ToastContext";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_BASE) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined in the environment variables.");
+}
 
 interface ImportResult {
   totalRows: number;
@@ -123,8 +127,8 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
             dragging
               ? "border-orange-500 bg-orange-500/[0.06] cursor-copy"
               : state === "idle"
-                ? "border-zinc-700/60 bg-zinc-900/50 hover:border-orange-500/50 hover:bg-orange-500/[0.03] cursor-pointer"
-                : "border-zinc-700/60 bg-zinc-900/50"
+                ? "border-zinc-300 dark:border-zinc-700/60 bg-white dark:bg-zinc-900/50 hover:border-orange-500/50 hover:bg-orange-500/[0.03] cursor-pointer"
+                : "border-zinc-300 dark:border-zinc-700/60 bg-white dark:bg-zinc-900/50"
           }`}
         >
           <input
@@ -137,21 +141,21 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
 
           {state === "idle" ? (
             <>
-              <UploadCloud className={`mb-3 h-10 w-10 transition-colors duration-200 ${dragging ? "text-orange-400" : "text-zinc-600"}`} strokeWidth={1.5} />
-              <p className="text-sm font-medium text-white m-0">
+              <UploadCloud className={`mb-3 h-10 w-10 transition-colors duration-200 ${dragging ? "text-orange-400" : "text-zinc-400 dark:text-zinc-600"}`} strokeWidth={1.5} />
+              <p className="text-sm font-medium text-zinc-900 dark:text-white m-0">
                 {dragging ? "Drop your CSV here" : "Drop your CSV here"}
               </p>
-              <p className="mt-1 text-xs text-zinc-500 m-0">
+              <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500 m-0">
                 Accepts .csv files only
               </p>
               <div className="my-4 flex items-center gap-3 w-full max-w-[200px]">
-                <div className="h-px flex-1 bg-zinc-800" />
-                <span className="text-xs text-zinc-600">or</span>
-                <div className="h-px flex-1 bg-zinc-800" />
+                <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+                <span className="text-xs text-zinc-400 dark:text-zinc-600">or</span>
+                <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
               </div>
               <button
                 onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
-                className="rounded-full border border-zinc-700/50 bg-zinc-800/80 px-5 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
+                className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-5 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
               >
                 Browse file
               </button>
@@ -159,20 +163,20 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
           ) : (
             <>
               <FileSpreadsheet className="mb-3 h-10 w-10 text-orange-400" strokeWidth={1.5} />
-              <p className="text-sm font-medium text-white m-0">{file!.name}</p>
-              <p className="mt-1 text-xs text-zinc-500 m-0">{formatFileSize(file!.size)}</p>
+              <p className="text-sm font-medium text-zinc-900 dark:text-white m-0">{file!.name}</p>
+              <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500 m-0">{formatFileSize(file!.size)}</p>
 
               <div className="mt-4 flex items-center gap-3">
                 <button
                   onClick={(e) => { e.stopPropagation(); reset(); }}
-                  className="flex items-center gap-1.5 rounded-full border border-zinc-700/50 bg-zinc-800/80 px-4 py-2 text-xs font-medium text-zinc-400 hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
                 >
                   <X className="h-3.5 w-3.5" />
                   Remove
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); upload(); }}
-                  className="rounded-full bg-orange-500 px-6 py-2 text-xs font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow cursor-pointer"
+                  className="rounded-full bg-orange-500 px-6 py-2 text-xs font-medium text-zinc-900 dark:text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow cursor-pointer"
                 >
                   Import candidates
                 </button>
@@ -184,17 +188,17 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
 
       {/* ── Uploading ── */}
       {state === "uploading" && (
-        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-700/60 bg-zinc-900/50 px-6 py-16 text-center">
-          <div className="mb-3 h-10 w-10 animate-spin rounded-full border-[3px] border-zinc-700 border-t-orange-500" />
-          <p className="text-sm font-medium text-white m-0">Importing candidates...</p>
-          <p className="mt-1 text-xs text-zinc-500 m-0">This may take a moment for large files</p>
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-300 dark:border-zinc-700/60 bg-white dark:bg-zinc-900/50 px-6 py-16 text-center">
+          <div className="mb-3 h-10 w-10 animate-spin rounded-full border-[3px] border-zinc-300 dark:border-zinc-700 border-t-orange-500" />
+          <p className="text-sm font-medium text-zinc-900 dark:text-white m-0">Importing candidates...</p>
+          <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500 m-0">This may take a moment for large files</p>
         </div>
       )}
 
       {/* ── Results ── */}
       {state === "results" && results && (
-        <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/50 p-5">
-          <h3 className="text-sm font-semibold text-white m-0 mb-4">Import Summary</h3>
+        <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-5">
+          <h3 className="text-sm font-semibold text-zinc-900 dark:text-white m-0 mb-4">Import Summary</h3>
 
           <div className="flex flex-wrap gap-3 mb-4">
             <div className="flex items-center gap-2 rounded-full bg-emerald-500/10 px-3.5 py-1.5">
@@ -216,19 +220,19 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
           </div>
 
           {results.errors.length > 0 && (
-            <div className="rounded-xl border border-zinc-800/60 bg-zinc-950/50 overflow-hidden">
+            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-zinc-50 dark:bg-zinc-950/50 overflow-hidden">
               <button
                 onClick={() => setErrorsExpanded(!errorsExpanded)}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-medium text-zinc-400 hover:text-white hover:bg-white/[0.02] transition-colors cursor-pointer bg-transparent border-none"
+                className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-white/[0.02] transition-colors cursor-pointer bg-transparent border-none"
               >
                 <span>Error details ({results.errors.length})</span>
                 {errorsExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
               {errorsExpanded && (
-                <div className="max-h-48 overflow-y-auto border-t border-zinc-800/60">
+                <div className="max-h-48 overflow-y-auto border-t border-zinc-200 dark:border-zinc-800/60">
                   {results.errors.map((err, i) => (
-                    <div key={i} className="flex items-start gap-3 px-4 py-2 border-b border-zinc-800/40 last:border-b-0">
-                      <span className="shrink-0 mt-0.5 flex h-5 min-w-[20px] items-center justify-center rounded bg-zinc-800 px-1.5 text-[10px] font-bold text-zinc-400">
+                    <div key={i} className="flex items-start gap-3 px-4 py-2 border-b border-zinc-200 dark:border-zinc-800/40 last:border-b-0">
+                      <span className="shrink-0 mt-0.5 flex h-5 min-w-[20px] items-center justify-center rounded bg-zinc-200 dark:bg-zinc-800 px-1.5 text-[10px] font-bold text-zinc-500 dark:text-zinc-400">
                         {err.row}
                       </span>
                       <span className="text-xs text-red-400 leading-relaxed">{err.reason}</span>
@@ -243,14 +247,14 @@ export default function CsvImporter({ onImportComplete }: { onImportComplete?: (
             {results.imported > 0 && (
               <a
                 href="/dashboard/candidates/list"
-                className="rounded-full bg-orange-500 px-5 py-2 text-xs font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
+                className="rounded-full bg-orange-500 px-5 py-2 text-xs font-medium text-zinc-900 dark:text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
               >
                 View Candidates
               </a>
             )}
             <button
               onClick={reset}
-              className="rounded-full border border-zinc-700/50 bg-zinc-800/80 px-5 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
+              className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-5 py-2 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
             >
               Import another file
             </button>

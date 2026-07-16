@@ -145,13 +145,13 @@ export default function HowItWorks() {
                     : `${150 + i * 40}ms`,
                 }}
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 border-4 border-zinc-200 dark:border-zinc-800">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#111827] text-white border-4 border-[#e5e7eb]">
                   {step.icon}
                 </div>
-                <h3 className="mt-4 text-base font-bold text-zinc-900 dark:text-white">
+                <h3 className="mt-4 text-base font-bold text-[#111827]">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 leading-normal">
+                <p className="mt-2 text-sm text-[#6b7280] leading-normal">
                   {step.description}
                 </p>
               </div>

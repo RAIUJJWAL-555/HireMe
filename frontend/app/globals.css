@@ -45,17 +45,17 @@
   --color-foreground: var(--foreground);
 
   /* ── Design token utilities ── */
-  --color-base: #0a0a0a;
-  --color-surface: #1a1a1a;
-  --color-surface-hover: #222222;
-  --color-surface-alt: #2a2a2a;
+  --color-base: var(--bg-primary);
+  --color-surface: var(--bg-secondary);
+  --color-surface-hover: var(--bg-tertiary);
+  --color-surface-alt: var(--bg-elevated);
 
   --color-primary: #f97316;
   --color-primary-hover: #ea580c;
   --color-primary-muted: #fb923c;
 
-  --color-divider: rgba(255, 255, 255, 0.06);
-  --color-divider-strong: rgba(255, 255, 255, 0.12);
+  --color-divider: var(--border-default);
+  --color-divider-strong: var(--border-strong);
 
   --color-stage-applied: #3b82f6;
   --color-stage-screening: #f59e0b;

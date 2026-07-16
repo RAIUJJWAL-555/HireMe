@@ -109,7 +109,7 @@ export default function DashboardPage() {
             <div className="mt-8 flex justify-center">
               <button
                 onClick={() => setLimit((prev) => prev + 6)}
-                className="rounded-full border border-zinc-700/50 bg-zinc-800/80 px-6 py-2 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-600 transition-colors cursor-pointer"
+                className="rounded-full border border-zinc-300 dark:border-zinc-700/50 bg-zinc-100 dark:bg-zinc-800/80 px-6 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors cursor-pointer"
               >
                 Load More
               </button>
@@ -119,7 +119,7 @@ export default function DashboardPage() {
       </main>
 
       {/* ── Right panel: stats + pipeline ── */}
-      <aside className="hidden w-80 shrink-0 flex-col gap-6 border-l border-zinc-800/60 bg-zinc-900/50 p-6 lg:flex xl:w-[340px]">
+      <aside className="hidden w-80 shrink-0 flex-col gap-6 border-l border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/50 p-6 lg:flex xl:w-[340px]">
         <StatsRing
           label="Hired Rate"
           value={hiringRate}

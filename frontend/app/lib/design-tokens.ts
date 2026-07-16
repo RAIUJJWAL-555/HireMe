@@ -4,10 +4,10 @@
 
 export const colors = {
   // ── Backgrounds ──
-  base: "#0a0a0a",        // page background (near-black)
-  surface: "#1a1a1a",     // cards, sidebar, elevated panels
-  surfaceHover: "#222222", // card hover state
-  surfaceAlt: "#2a2a2a",  // alternating card / inner container
+  base: "#fafafa",        // page background (very light gray)
+  surface: "#f4f4f5",     // cards, sidebar, elevated panels (light gray)
+  surfaceHover: "#e4e4e7", // card hover state
+  surfaceAlt: "#f0f0f2",  // alternating card / inner container
 
   // ── Primary accent (orange) ──
   primary: "#f97316",     // orange-500
@@ -17,11 +17,11 @@ export const colors = {
   primaryBorder: "rgba(249, 115, 22, 0.20)",
 
   // ── Secondary accent (blue) ──
-  secondary: "#60a5fa",   // blue-400
-  secondaryHover: "#3b82f6", // blue-500
-  secondaryMuted: "#93c5fd", // blue-300
-  secondaryBg: "rgba(96, 165, 250, 0.10)",
-  secondaryBorder: "rgba(96, 165, 250, 0.20)",
+  secondary: "#3b82f6",   // blue-500 (darkened for contrast on white)
+  secondaryHover: "#2563eb", // blue-600
+  secondaryMuted: "#60a5fa", // blue-400
+  secondaryBg: "rgba(59, 130, 246, 0.10)",
+  secondaryBorder: "rgba(59, 130, 246, 0.20)",
 
   // ── Semantic: Success (green) ──
   success: "#22c55e",     // green-500
@@ -40,24 +40,24 @@ export const colors = {
   warningBg: "rgba(245, 158, 11, 0.10)",
 
   // ── Text ──
-  textPrimary: "#ffffff",   // headings, primary text (dark mode)
-  textSecondary: "#9ca3af", // muted body text (gray-400)
-  textMuted: "#6b7280",     // faint labels, timestamps (gray-500)
-  textDisabled: "#4b5563",  // gray-600
+  textPrimary: "#111827",   // headings, primary text (near-black)
+  textSecondary: "#6b7280", // muted body text (medium gray — lightest on white)
+  textMuted: "#6b7280",     // faint labels, timestamps (same minimum)
+  textDisabled: "#9ca3af",  // gray-400 (disabled elements only)
 
   // ── Borders ──
-  border: "rgba(255, 255, 255, 0.06)",     // subtle divider
-  borderStrong: "rgba(255, 255, 255, 0.12)", // stronger divider
-  borderFocus: "#f97316",                    // focus ring (orange)
+  border: "#e5e7eb",              // subtle divider (light gray)
+  borderStrong: "#d1d5db",        // stronger divider
+  borderFocus: "#f97316",         // focus ring (orange)
 
   // ── Kanban stage colors ──
   stage: {
-    applied:    { dot: "#3b82f6", text: "#60a5fa", bg: "rgba(59, 130, 246, 0.10)" },  // blue
-    screening:  { dot: "#f59e0b", text: "#fbbf24", bg: "rgba(245, 158, 11, 0.10)" },  // amber
-    interview:  { dot: "#8b5cf6", text: "#a78bfa", bg: "rgba(139, 92, 246, 0.10)" },  // violet
-    offer:      { dot: "#06b6d4", text: "#22d3ee", bg: "rgba(6, 182, 212, 0.10)" },   // cyan
-    hired:      { dot: "#22c55e", text: "#4ade80", bg: "rgba(34, 197, 94, 0.10)" },    // green
-    rejected:   { dot: "#ef4444", text: "#f87171", bg: "rgba(239, 68, 68, 0.10)" },    // red
+    applied:    { dot: "#3b82f6", text: "#2563eb", bg: "rgba(59, 130, 246, 0.10)" },  // blue
+    screening:  { dot: "#f59e0b", text: "#d97706", bg: "rgba(245, 158, 11, 0.10)" },  // amber
+    interview:  { dot: "#8b5cf6", text: "#7c3aed", bg: "rgba(139, 92, 246, 0.10)" },  // violet
+    offer:      { dot: "#06b6d4", text: "#0891b2", bg: "rgba(6, 182, 212, 0.10)" },   // cyan
+    hired:      { dot: "#22c55e", text: "#16a34a", bg: "rgba(34, 197, 94, 0.10)" },    // green
+    rejected:   { dot: "#ef4444", text: "#dc2626", bg: "rgba(239, 68, 68, 0.10)" },    // red
   },
 } as const;
 
@@ -113,8 +113,8 @@ export const typography = {
 } as const;
 
 export const shadows = {
-  sm:   "0 1px 2px rgba(0, 0, 0, 0.3)",
-  md:   "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3)",
-  lg:   "0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3)",
+  sm:   "0 1px 2px rgba(0, 0, 0, 0.05)",
+  md:   "0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05)",
+  lg:   "0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05)",
   glow: "0 0 20px rgba(249, 115, 22, 0.15)",
 } as const;

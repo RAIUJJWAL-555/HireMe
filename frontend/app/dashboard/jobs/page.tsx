@@ -70,7 +70,7 @@ export default function JobsPage() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-8 md:px-8 min-h-screen flex flex-col justify-center">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-xl font-semibold text-white m-0">Jobs</h1>
+          <h1 className="text-xl font-semibold text-[#111827] m-0">Jobs</h1>
           <Link
             href="/dashboard/jobs/new"
             className="rounded-full bg-orange-500 px-5 py-2 text-sm font-medium text-white hover:bg-orange-600 transition-all shadow-sm hover:shadow"
@@ -83,7 +83,7 @@ export default function JobsPage() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="rounded-full border border-zinc-700/50 bg-zinc-800/80 px-4 py-2 text-sm text-zinc-300 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
+            className="rounded-full border border-[#e5e7eb] bg-white px-4 py-2 text-sm text-[#6b7280] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 focus:outline-none transition-colors"
           >
             <option value="">All statuses</option>
             <option value="open">Open</option>
@@ -92,12 +92,12 @@ export default function JobsPage() {
         </div>
 
         {loading ? (
-          <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/50 overflow-x-auto">
+          <div className="rounded-2xl border border-[#e5e7eb] bg-white overflow-x-auto">
             <table className="w-full min-w-[600px] border-collapse">
               <thead>
-                <tr className="bg-zinc-900/50 text-left">
+                <tr className="bg-white text-left">
                   {["Title", "Qualification", "Experience", "Status", "Candidates", "Actions"].map((h) => (
-                    <th key={h} className={`px-4 py-4 text-xs font-semibold uppercase text-zinc-500 ${h === "Candidates" ? "text-right" : ""}`}>{h}</th>
+                    <th key={h} className={`px-4 py-4 text-xs font-semibold uppercase text-[#6b7280] ${h === "Candidates" ? "text-right" : ""}`}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -117,36 +117,36 @@ export default function JobsPage() {
             {/* Mobile: stacked card view */}
             <div className="flex flex-col gap-3 md:hidden">
               {jobs.map((job) => (
-                <div key={job.id} className="rounded-2xl border border-zinc-800/60 bg-zinc-900/50 p-4">
+                <div key={job.id} className="rounded-2xl border border-[#e5e7eb] bg-white p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-sm font-medium text-white truncate">{job.title}</h3>
-                      <p className="text-xs text-zinc-500 mt-0.5">{job.qualification}</p>
-                      <p className="text-xs text-zinc-500 mt-0.5">{EXPERIENCE_LABELS[job.experience] || job.experience}</p>
+                      <h3 className="text-sm font-medium text-[#111827] truncate">{job.title}</h3>
+                      <p className="text-xs text-[#6b7280] mt-0.5">{job.qualification}</p>
+                      <p className="text-xs text-[#6b7280] mt-0.5">{EXPERIENCE_LABELS[job.experience] || job.experience}</p>
                     </div>
                     <span
                       className="shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium"
                       style={{
-                        backgroundColor: job.status === "open" ? colors.successBg : "rgba(255,255,255,0.06)",
-                        color: job.status === "open" ? colors.successMuted : colors.textMuted,
+                        backgroundColor: job.status === "open" ? colors.successBg : "#f4f4f5",
+                        color: job.status === "open" ? colors.successMuted : "#6b7280",
                       }}
                     >
                       {job.status}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-800/60">
-                    <span className="text-xs text-zinc-500">{job._count.candidates} candidates</span>
+                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#e5e7eb]">
+                    <span className="text-xs text-[#6b7280]">{job._count.candidates} candidates</span>
                     <div className="flex gap-3">
                       <button
                         onClick={() => router.push(`/dashboard/jobs/${job.id}/edit`)}
-                        className="text-xs text-zinc-300 hover:text-orange-400 underline transition-colors"
+                        className="text-xs text-[#6b7280] hover:text-orange-500 underline transition-colors"
                       >
                         Edit
                       </button>
                       {user?.role === "admin" && (
                         <button
                           onClick={() => handleDelete(job.id)}
-                          className="text-xs text-red-400 hover:text-red-300 underline transition-colors"
+                          className="text-xs text-red-500 hover:text-red-700 underline transition-colors"
                         >
                           Delete
                         </button>
@@ -158,48 +158,48 @@ export default function JobsPage() {
             </div>
 
             {/* Desktop: table view */}
-            <div className="hidden md:block rounded-2xl border border-zinc-800/60 bg-zinc-900/50 overflow-x-auto">
+            <div className="hidden md:block rounded-2xl border border-[#e5e7eb] bg-white overflow-x-auto">
               <table className="w-full min-w-[700px] border-collapse">
                 <thead>
                   <tr className="text-left">
-                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Title</th>
-                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Qualification</th>
-                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Experience</th>
-                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500">Status</th>
-                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500 text-right">Candidates</th>
-                    <th className="px-4 py-4 text-xs font-semibold uppercase text-zinc-500 text-right">Actions</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-[#6b7280]">Title</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-[#6b7280]">Qualification</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-[#6b7280]">Experience</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-[#6b7280]">Status</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-[#6b7280] text-right">Candidates</th>
+                    <th className="px-4 py-4 text-xs font-semibold uppercase text-[#6b7280] text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {jobs.map((job) => (
-                    <tr key={job.id} className="border-t border-zinc-800/60">
-                      <td className="px-4 py-4 text-sm font-medium text-white align-middle">{job.title}</td>
-                      <td className="px-4 py-4 text-sm text-zinc-400 align-middle">{job.qualification}</td>
-                      <td className="px-4 py-4 text-sm text-zinc-400 align-middle">{EXPERIENCE_LABELS[job.experience] || job.experience}</td>
+                    <tr key={job.id} className="border-t border-[#e5e7eb]">
+                      <td className="px-4 py-4 text-sm font-medium text-[#111827] align-middle">{job.title}</td>
+                      <td className="px-4 py-4 text-sm text-[#6b7280] align-middle">{job.qualification}</td>
+                      <td className="px-4 py-4 text-sm text-[#6b7280] align-middle">{EXPERIENCE_LABELS[job.experience] || job.experience}</td>
                       <td className="px-4 py-4 align-middle">
                         <span
                           className="inline-block rounded-full px-2.5 py-0.5 text-xs font-medium"
                           style={{
-                            backgroundColor: job.status === "open" ? colors.successBg : "rgba(255,255,255,0.06)",
-                            color: job.status === "open" ? colors.successMuted : colors.textMuted,
+                            backgroundColor: job.status === "open" ? colors.successBg : "#f4f4f5",
+                            color: job.status === "open" ? colors.successMuted : "#6b7280",
                           }}
                         >
                           {job.status}
                         </span>
                       </td>
-                      <td className="px-4 py-4 text-sm text-zinc-400 align-middle text-right">{job._count.candidates}</td>
+                      <td className="px-4 py-4 text-sm text-[#6b7280] align-middle text-right">{job._count.candidates}</td>
                       <td className="px-4 py-4 align-middle text-right">
                         <div className="flex items-center justify-end gap-3">
                           <button
                             onClick={() => router.push(`/dashboard/jobs/${job.id}/edit`)}
-                            className="text-sm text-zinc-300 hover:text-orange-400 underline transition-colors"
+                            className="text-sm text-[#6b7280] hover:text-orange-500 underline transition-colors"
                           >
                             Edit
                           </button>
                           {user?.role === "admin" && (
                             <button
                               onClick={() => handleDelete(job.id)}
-                              className="text-sm text-red-400 hover:text-red-300 underline transition-colors"
+                              className="text-sm text-red-500 hover:text-red-700 underline transition-colors"
                             >
                               Delete
                             </button>

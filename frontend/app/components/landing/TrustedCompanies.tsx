@@ -56,14 +56,14 @@ export default function TrustedCompanies() {
 
   return (
     <section className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16 mb-16 sm:mb-20">
-      <div className="bg-zinc-950 dark:bg-zinc-900 rounded-2xl p-6 sm:p-8 md:px-10 md:py-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl shadow-zinc-200/5 dark:shadow-none border border-zinc-800">
+      <div className="bg-[#f4f4f5] rounded-2xl p-6 sm:p-8 md:px-10 md:py-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl shadow-zinc-200/5 border border-[#e5e7eb]">
         
         {/* Left Side: Labels */}
         <div className="shrink-0 text-center md:text-left">
-          <p className="text-xs font-bold tracking-wider uppercase text-zinc-500">
+          <p className="text-xs font-bold tracking-wider uppercase text-[#6b7280]">
             Trusted By
           </p>
-          <p className="text-lg sm:text-xl font-extrabold text-white mt-1">
+          <p className="text-lg sm:text-xl font-extrabold text-[#111827] mt-1">
             500+ global teams
           </p>
         </div>
@@ -73,9 +73,9 @@ export default function TrustedCompanies() {
           {partners.map((partner) => (
             <div
               key={partner.name}
-              className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-200 cursor-pointer select-none group"
+              className="flex items-center gap-2 text-[#6b7280] hover:text-[#111827] transition-colors duration-200 cursor-pointer select-none group"
             >
-              <div className="text-zinc-500 group-hover:text-orange-500 transition-colors duration-200">
+              <div className="text-[#9ca3af] group-hover:text-orange-500 transition-colors duration-200">
                 {partner.icon}
               </div>
               <span className="text-sm font-semibold tracking-tight uppercase">
