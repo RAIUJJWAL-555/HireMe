@@ -29,7 +29,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     return;
   }
   console.error(err);
-  res.status(500).json({ error: "Internal server error" });
+  res.status(500).json({ 
+    error: "Internal server error", 
+    message: err.message, 
+    stack: err.stack 
+  });
 });
 
 const PORT = process.env.PORT || 5000;

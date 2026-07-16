@@ -106,7 +106,9 @@
   --color-bg-page: var(--bg-page);
   --color-bg-surface: var(--bg-surface);
   --color-text-heading: var(--text-heading);
+  --color-text-secondary: var(--text-secondary);
   --color-text-muted-token: var(--text-muted-token);
+  --color-text-faint: var(--text-faint);
   --color-border-theme: var(--border-color);
   --color-accent-orange: var(--accent-orange);
   --color-accent-blue: var(--accent-blue);
